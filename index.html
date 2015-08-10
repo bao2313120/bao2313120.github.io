@@ -61,6 +61,60 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-mysql忘记密码处理" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/08/10/mysql忘记密码处理/" class="article-date">
+  <time datetime="2015-08-10T09:31:23.000Z" itemprop="datePublished">2015-08-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/08/10/mysql忘记密码处理/">mysql忘记密码处理</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>I</p>
+<p>工作中会使用很多的主机，偶尔用到一台很久不用的主机，需要mysql的服务，作为实验环境第一反应会去apt-get intsall mysql-server. 可是发现已经安装过。 then,what’s the password for root?</p>
+<p>  <strong>进入免权限认证处理</strong></p>
+<p>  <code>sudo vim /etc/mysql/my.cnf</code></p>
+<p>  把<code>skip-grant-tables</code> 在[mysqld]段中。</p>
+<p>  重启<code>mysql sudo service mysql restart</code></p>
+<p>  然后可以直接无密码登录mysql,</p>
+<pre><code>mysql -uroot;
+
+<span class="operator"><span class="keyword">use</span> mysql;</span>
+
+<span class="operator"><span class="keyword">update</span> <span class="keyword">user</span> <span class="keyword">set</span> <span class="keyword">password</span> = <span class="keyword">password</span>(<span class="string">'new password'</span>) <span class="keyword">where</span> <span class="keyword">user</span> = <span class="string">'root'</span>;</span>
+
+<span class="operator"><span class="keyword">flush</span> <span class="keyword">privileges</span>;</span>
+
+exit;
+</code></pre><p>然后把之前修改的my.cnf文件改回来，之后重启MySQL服务。</p>
+<p>即修改密码成功</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://bcyyu.wang/2015/08/10/mysql忘记密码处理/" data-id="cid5qkc5l00033uene14r9qpv" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-mysql新建用户权限控制" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/08/10/mysql新建用户权限控制/" class="article-date">
@@ -94,7 +148,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bcyyu.wang/2015/08/10/mysql新建用户权限控制/" data-id="cid5qdsbm0002p7engrc2ovqn" class="article-share-link">Share</a>
+      <a data-url="http://bcyyu.wang/2015/08/10/mysql新建用户权限控制/" data-id="cid5qkc5k00023uenlirwz8pp" class="article-share-link">Share</a>
       
       
     </footer>
@@ -130,7 +184,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bcyyu.wang/2015/08/04/Hadoop之Ambari初探/" data-id="cid5qdsam0000p7en3hr787wk" class="article-share-link">Share</a>
+      <a data-url="http://bcyyu.wang/2015/08/04/Hadoop之Ambari初探/" data-id="cid5qkc4k00003uenn6jmrzh8" class="article-share-link">Share</a>
       
       
     </footer>
@@ -173,7 +227,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bcyyu.wang/2015/08/03/开站序言/" data-id="cid5qdsbg0001p7en2glm703o" class="article-share-link">Share</a>
+      <a data-url="http://bcyyu.wang/2015/08/03/开站序言/" data-id="cid5qkc5h00013uen50tus5k4" class="article-share-link">Share</a>
       
       
     </footer>
@@ -198,7 +252,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">3</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">4</span></li></ul>
     </div>
   </div>
 
@@ -208,6 +262,10 @@
     <h3 class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2015/08/10/mysql忘记密码处理/">mysql忘记密码处理</a>
+          </li>
         
           <li>
             <a href="/2015/08/10/mysql新建用户权限控制/">mysql新建用户权限控制</a>

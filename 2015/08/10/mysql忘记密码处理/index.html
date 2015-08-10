@@ -3,30 +3,30 @@
 <head>
   <meta charset="utf-8">
   
-  <title>mysql新建用户权限控制 | Bao Chuanyang</title>
+  <title>mysql忘记密码处理 | Bao Chuanyang</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="创建用户  
-create user username identified by &amp;#39;password&amp;#39;
-授权
-grant all privileges on databasename.* to &amp;#39;username&amp;#39;@&amp;#39;localhost&amp;#39; identified by &amp;#39;password&amp;#39;  
-这里如果需要远程登录则将localhos">
+  <meta name="description" content="I
+工作中会使用很多的主机，偶尔用到一台很久不用的主机，需要mysql的服务，作为实验环境第一反应会去apt-get intsall mysql-server. 可是发现已经安装过。 then,what’s the password for root?
+  进入免权限认证处理
+  sudo vim /etc/mysql/my.cnf
+  把skip-grant-tables 在[mysqld]段中">
 <meta property="og:type" content="article">
-<meta property="og:title" content="mysql新建用户权限控制">
-<meta property="og:url" content="http://bcyyu.wang/2015/08/10/mysql新建用户权限控制/index.html">
+<meta property="og:title" content="mysql忘记密码处理">
+<meta property="og:url" content="http://bcyyu.wang/2015/08/10/mysql忘记密码处理/index.html">
 <meta property="og:site_name" content="Bao Chuanyang">
-<meta property="og:description" content="创建用户  
-create user username identified by &amp;#39;password&amp;#39;
-授权
-grant all privileges on databasename.* to &amp;#39;username&amp;#39;@&amp;#39;localhost&amp;#39; identified by &amp;#39;password&amp;#39;  
-这里如果需要远程登录则将localhos">
-<meta property="og:updated_time" content="2015-08-10T09:45:03.000Z">
+<meta property="og:description" content="I
+工作中会使用很多的主机，偶尔用到一台很久不用的主机，需要mysql的服务，作为实验环境第一反应会去apt-get intsall mysql-server. 可是发现已经安装过。 then,what’s the password for root?
+  进入免权限认证处理
+  sudo vim /etc/mysql/my.cnf
+  把skip-grant-tables 在[mysqld]段中">
+<meta property="og:updated_time" content="2015-08-10T09:47:43.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="mysql新建用户权限控制">
-<meta name="twitter:description" content="创建用户  
-create user username identified by &amp;#39;password&amp;#39;
-授权
-grant all privileges on databasename.* to &amp;#39;username&amp;#39;@&amp;#39;localhost&amp;#39; identified by &amp;#39;password&amp;#39;  
-这里如果需要远程登录则将localhos">
+<meta name="twitter:title" content="mysql忘记密码处理">
+<meta name="twitter:description" content="I
+工作中会使用很多的主机，偶尔用到一台很久不用的主机，需要mysql的服务，作为实验环境第一反应会去apt-get intsall mysql-server. 可是发现已经安装过。 then,what’s the password for root?
+  进入免权限认证处理
+  sudo vim /etc/mysql/my.cnf
+  把skip-grant-tables 在[mysqld]段中">
   
     <link rel="alternative" href="/atom.xml" title="Bao Chuanyang" type="application/atom+xml">
   
@@ -72,10 +72,10 @@ grant all privileges on databasename.* to &amp;#39;username&amp;#39;@&amp;#39;lo
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-mysql新建用户权限控制" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-mysql忘记密码处理" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2015/08/10/mysql新建用户权限控制/" class="article-date">
-  <time datetime="2015-08-10T09:12:37.000Z" itemprop="datePublished">2015-08-10</time>
+    <a href="/2015/08/10/mysql忘记密码处理/" class="article-date">
+  <time datetime="2015-08-10T09:31:23.000Z" itemprop="datePublished">2015-08-10</time>
 </a>
     
   </div>
@@ -86,7 +86,7 @@ grant all privileges on databasename.* to &amp;#39;username&amp;#39;@&amp;#39;lo
         
   
     <h1 class="article-title" itemprop="name">
-      mysql新建用户权限控制
+      mysql忘记密码处理
     </h1>
   
 
@@ -94,18 +94,29 @@ grant all privileges on databasename.* to &amp;#39;username&amp;#39;@&amp;#39;lo
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>创建用户</strong>  </p>
-<p><code>create user username identified by &#39;password&#39;</code></p>
-<p><strong>授权</strong></p>
-<p><code>grant all privileges on databasename.* to &#39;username&#39;@&#39;localhost&#39; identified by &#39;password&#39;</code>  </p>
-<p>这里如果需要远程登录则将localhost换成需要的主机名，如果是任意地点登录则为<code>%</code>， 有一点需要注意，需要在    <code>/etc/mysql/my.cnf</code> 中将</p>
-<p><code>bind-address = 127.0.0.1</code> 注释掉。</p>
-<p>####然后刷新权限<br><code>flush privileges</code></p>
+        <p>I</p>
+<p>工作中会使用很多的主机，偶尔用到一台很久不用的主机，需要mysql的服务，作为实验环境第一反应会去apt-get intsall mysql-server. 可是发现已经安装过。 then,what’s the password for root?</p>
+<p>  <strong>进入免权限认证处理</strong></p>
+<p>  <code>sudo vim /etc/mysql/my.cnf</code></p>
+<p>  把<code>skip-grant-tables</code> 在[mysqld]段中。</p>
+<p>  重启<code>mysql sudo service mysql restart</code></p>
+<p>  然后可以直接无密码登录mysql,</p>
+<pre><code>mysql -uroot;
+
+<span class="operator"><span class="keyword">use</span> mysql;</span>
+
+<span class="operator"><span class="keyword">update</span> <span class="keyword">user</span> <span class="keyword">set</span> <span class="keyword">password</span> = <span class="keyword">password</span>(<span class="string">'new password'</span>) <span class="keyword">where</span> <span class="keyword">user</span> = <span class="string">'root'</span>;</span>
+
+<span class="operator"><span class="keyword">flush</span> <span class="keyword">privileges</span>;</span>
+
+exit;
+</code></pre><p>然后把之前修改的my.cnf文件改回来，之后重启MySQL服务。</p>
+<p>即修改密码成功</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bcyyu.wang/2015/08/10/mysql新建用户权限控制/" data-id="cid5qkc5k00023uenlirwz8pp" class="article-share-link">Share</a>
+      <a data-url="http://bcyyu.wang/2015/08/10/mysql忘记密码处理/" data-id="cid5qkc5l00033uene14r9qpv" class="article-share-link">Share</a>
       
       
     </footer>
@@ -114,19 +125,10 @@ grant all privileges on databasename.* to &amp;#39;username&amp;#39;@&amp;#39;lo
     
 <nav id="article-nav">
   
-    <a href="/2015/08/10/mysql忘记密码处理/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          mysql忘记密码处理
-        
-      </div>
-    </a>
   
-  
-    <a href="/2015/08/04/Hadoop之Ambari初探/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2015/08/10/mysql新建用户权限控制/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Hadoop之Ambari初探</div>
+      <div class="article-nav-title">mysql新建用户权限控制</div>
     </a>
   
 </nav>
