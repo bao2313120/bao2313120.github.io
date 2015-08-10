@@ -3,18 +3,30 @@
 <head>
   <meta charset="utf-8">
   
-  <title>hello xiaoyu | Bao Chuanyang</title>
+  <title>mysql新建用户权限控制 | Bao Chuanyang</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
+  <meta name="description" content="创建用户  
+create user username identified by &amp;#39;password&amp;#39;
+授权
+grant all privileges on databasename.* to &amp;#39;username&amp;#39;@&amp;#39;localhost&amp;#39; identified by &amp;#39;password&amp;#39;  
+这里如果需要远程登录则将localhos">
 <meta property="og:type" content="article">
-<meta property="og:title" content="hello xiaoyu">
-<meta property="og:url" content="http://bcyyu.wang/2015/08/03/hello-xiaoyu/index.html">
+<meta property="og:title" content="mysql新建用户权限控制">
+<meta property="og:url" content="http://bcyyu.wang/2015/08/10/mysql新建用户权限控制/index.html">
 <meta property="og:site_name" content="Bao Chuanyang">
-<meta property="og:description">
-<meta property="og:updated_time" content="2015-08-03T14:06:47.000Z">
+<meta property="og:description" content="创建用户  
+create user username identified by &amp;#39;password&amp;#39;
+授权
+grant all privileges on databasename.* to &amp;#39;username&amp;#39;@&amp;#39;localhost&amp;#39; identified by &amp;#39;password&amp;#39;  
+这里如果需要远程登录则将localhos">
+<meta property="og:updated_time" content="2015-08-10T09:29:59.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="hello xiaoyu">
-<meta name="twitter:description">
+<meta name="twitter:title" content="mysql新建用户权限控制">
+<meta name="twitter:description" content="创建用户  
+create user username identified by &amp;#39;password&amp;#39;
+授权
+grant all privileges on databasename.* to &amp;#39;username&amp;#39;@&amp;#39;localhost&amp;#39; identified by &amp;#39;password&amp;#39;  
+这里如果需要远程登录则将localhos">
   
     <link rel="alternative" href="/atom.xml" title="Bao Chuanyang" type="application/atom+xml">
   
@@ -60,10 +72,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-hello-xiaoyu" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-mysql新建用户权限控制" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2015/08/03/hello-xiaoyu/" class="article-date">
-  <time datetime="2015-08-03T14:06:47.000Z" itemprop="datePublished">2015-08-03</time>
+    <a href="/2015/08/10/mysql新建用户权限控制/" class="article-date">
+  <time datetime="2015-08-10T09:12:37.000Z" itemprop="datePublished">2015-08-10</time>
 </a>
     
   </div>
@@ -74,7 +86,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      hello xiaoyu
+      mysql新建用户权限控制
     </h1>
   
 
@@ -82,11 +94,18 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p><strong>创建用户</strong>  </p>
+<p><code>create user username identified by &#39;password&#39;</code></p>
+<p><strong>授权</strong></p>
+<p><code>grant all privileges on databasename.* to &#39;username&#39;@&#39;localhost&#39; identified by &#39;password&#39;</code>  </p>
+<p>这里如果需要远程登录则将localhost换成需要的主机名，如果是任意地点登录则为<code>%</code>， 有一点需要注意，需要在    <code>/etc/mysql/my.cnf</code> 中将</p>
+<p><code>bind-address = 127.0.0.1</code> 注释掉。</p>
+<p>####然后刷新权限<br><code>flush privileges</code></p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bcyyu.wang/2015/08/03/hello-xiaoyu/" data-id="cicwq39je0002m1enhqh1703o" class="article-share-link">Share</a>
+      <a data-url="http://bcyyu.wang/2015/08/10/mysql新建用户权限控制/" data-id="cid5qdsbm0002p7engrc2ovqn" class="article-share-link">Share</a>
       
       
     </footer>
@@ -95,19 +114,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2015/08/03/开站序言/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          开站序言
-        
-      </div>
-    </a>
   
-  
-    <a href="/2015/08/03/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2015/08/04/Hadoop之Ambari初探/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Hello World</div>
+      <div class="article-nav-title">Hadoop之Ambari初探</div>
     </a>
   
 </nav>
@@ -129,7 +139,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">4</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -141,19 +151,15 @@
       <ul>
         
           <li>
-            <a href="/2015/08/04/enable_math/">(no title)</a>
+            <a href="/2015/08/10/mysql新建用户权限控制/">mysql新建用户权限控制</a>
+          </li>
+        
+          <li>
+            <a href="/2015/08/04/Hadoop之Ambari初探/">Hadoop之Ambari初探</a>
           </li>
         
           <li>
             <a href="/2015/08/03/开站序言/">开站序言</a>
-          </li>
-        
-          <li>
-            <a href="/2015/08/03/hello-xiaoyu/">hello xiaoyu</a>
-          </li>
-        
-          <li>
-            <a href="/2015/08/03/hello-world/">Hello World</a>
           </li>
         
       </ul>

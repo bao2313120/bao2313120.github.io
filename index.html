@@ -61,55 +61,76 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-enable_math" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-mysql新建用户权限控制" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2015/08/04/enable_math/" class="article-date">
-  <time datetime="2015-08-03T16:17:39.000Z" itemprop="datePublished">2015-08-04</time>
+    <a href="/2015/08/10/mysql新建用户权限控制/" class="article-date">
+  <time datetime="2015-08-10T09:12:37.000Z" itemprop="datePublished">2015-08-10</time>
 </a>
     
   </div>
   <div class="article-inner">
     
     
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/08/10/mysql新建用户权限控制/">mysql新建用户权限控制</a>
+    </h1>
+  
+
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="Enable_Math">Enable Math</h2><ol>
-<li><p>Math rendering is disabled by default, to enable it, check on the <em>Enable Math</em> o·ption in <em>Preferences</em> &gt; <em>General</em> &gt; <em>All Documents</em>:.</p>
-</li>
-<li><p>Make sure you’ve connected to the internet.</p>
-<p>The Math rendering is powered by <a href="http://www.mathjax.org" target="_blank" rel="external">MathJax</a>, the resources such as fonts are all online, thus the internet connection is needed for it to work.</p>
-</li>
-<li><p>For Users in mainland China</p>
-<p>Users in mainland China, if the Math option doesn’t work for you, try if you can visit <a href="http://www.mathjax.org" target="_blank" rel="external">MathJax</a> without VPN connected. If you can’t, maybe it’s blocked by the Great Firewall of China. Try connect to a VPN, climb over the wall, then the Math rendering should work.</p>
-</li>
-</ol>
-<h3 id="Known_issues_of_Math_option">Known issues of Math option</h3><ol>
-<li><p>It makes the Preview blink and blink again whenever typing.</p>
-<p>Math support is a good addition, except that it makes the Preview blink and blink again whenever typing, as it needs to refresh the whole typesetting.</p>
-</li>
-<li><p>It makes the Right View always scroll to top whenever typing.</p>
-</li>
-</ol>
-<p>That’s why I make it disabled by default. I suggest only enable it when you write Math Formulas, or better, only enable it when you export document to HTML which contains Math Formulas, when you are writing, disable it.</p>
-<h2 id="Block_level_vs_Inline_level">Block level vs Inline level</h2><p>Use double US dollors sign pair for Block level Math formula, and three US dollors sign pair for Inline Level.</p>
-<p>For example this is a Block level $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}$$ formula, and this is an inline Level $$$x = {-b \pm \sqrt{b^2-4ac} \over 2a}$$$ formula.</p>
-<h2 id="The_Math_Syntax">The Math Syntax</h2><p>The syntax is the same as <a href="http://en.wikipedia.org/wiki/TeX" target="_blank" rel="external"><strong>Tex</strong></a>, expect one thing:</p>
-<p>Because the characters such as \ and _ and * and so on have special meanings in Markdown language, you need to add an extra \ character before them to escape them to make the Math renders correctly.</p>
-<p>For example in TeX syntax it starts with [ but here you need to add an extra \ to escape it, thus \[</p>
-<p>And so on… Luckily you don’t have to escape every \ characters, normally escape the beginning [ and ending ] is enough, and perhaps \ to \. </p>
-<h4 id="The_Quadratic_Formula">The Quadratic Formula</h4><p>$$x = {-b \pm \sqrt{b^2-4ac} \over 2a}$$</p>
-<h4 id="The_Lorenz_Equations">The Lorenz Equations</h4><p>\[\begin{aligned}<br>\dot{x} &amp; = \sigma(y-x) \\<br>\dot{y} &amp; = \rho x - y - xz \\<br>\dot{z} &amp; = -\beta z + xy<br>\end{aligned} \]</p>
-<h4 id="The_Cauchy-Schwarz_Inequality">The Cauchy-Schwarz Inequality</h4><p>\[ \left( \sum_{k=1}^n a_k b<em>k \right)^2 \leq \left( \sum\</em>{k=1}^n a<em>k^2 \right) \left( \sum</em>{k=1}^n b_k^2 \right) \]</p>
-<h4 id="A_Cross_Product_Formula">A Cross Product Formula</h4><p>\[\mathbf{V}_1 \times \mathbf{V}_2 =  \begin{vmatrix}<br>\mathbf{i} &amp; \mathbf{j} &amp; \mathbf{k} \\<br>\frac{\partial X}{\partial u} &amp;  \frac{\partial Y}{\partial u} &amp; 0 \\<br>\frac{\partial X}{\partial v} &amp;  \frac{\partial Y}{\partial v} &amp; 0<br>\end{vmatrix} \]</p>
-<h4 id="The_probability_of_getting_$$$k$$$_heads_when_flipping_$$$n$$$_coins_is">The probability of getting $$$k$$$ heads when flipping $$$n$$$ coins is</h4><p>\[P(E) = {n \choose k} p^k (1-p)^{ n-k} \]</p>
-<h4 id="An_Identity_of_Ramanujan">An Identity of Ramanujan</h4><p>\[ \frac{1}{\Bigl(\sqrt{\phi \sqrt{5}}-\phi\Bigr) e^{\frac25 \pi}} =<br>1+\frac{e^{-2\pi}} {1+\frac{e^{-4\pi}} {1+\frac{e^{-6\pi}}<br>{1+\frac{e^{-8\pi}} {1+\ldots} } } } \]</p>
-<h4 id="Maxwell’s_Equations">Maxwell’s Equations</h4><p>\[  \begin{aligned}<br>\nabla \times \vec{\mathbf{B}} -\, \frac1c\, \frac{\partial\vec{\mathbf{E}}}{\partial t} &amp; = \frac{4\pi}{c}\vec{\mathbf{j}} \   \nabla \cdot \vec{\mathbf{E}} &amp; = 4 \pi \rho \<br>\nabla \times \vec{\mathbf{E}}\, +\, \frac1c\, \frac{\partial\vec{\mathbf{B}}}{\partial t} &amp; = \vec{\mathbf{0}} \<br>\nabla \cdot \vec{\mathbf{B}} &amp; = 0 \end{aligned}<br>\]</p>
-<h4 id="A_Rogers-Ramanujan_Identity">A Rogers-Ramanujan Identity</h4><p>\[  1 +  \frac{q^2}{(1-q)}+\frac{q^6}{(1-q)(1-q^2)}+\cdots =<br>\prod_{j=0}^{\infty}\frac{1}{(1-q^{5j+2})(1-q^{5j+3})},<br>\quad\quad \text{for $|q|&lt;1$}. \]</p>
+        <p><strong>创建用户</strong>  </p>
+<p><code>create user username identified by &#39;password&#39;</code></p>
+<p><strong>授权</strong></p>
+<p><code>grant all privileges on databasename.* to &#39;username&#39;@&#39;localhost&#39; identified by &#39;password&#39;</code>  </p>
+<p>这里如果需要远程登录则将localhost换成需要的主机名，如果是任意地点登录则为<code>%</code>， 有一点需要注意，需要在    <code>/etc/mysql/my.cnf</code> 中将</p>
+<p><code>bind-address = 127.0.0.1</code> 注释掉。</p>
+<p>####然后刷新权限<br><code>flush privileges</code></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bcyyu.wang/2015/08/04/enable_math/" data-id="cicwq39ie0000m1enzd0es1ub" class="article-share-link">Share</a>
+      <a data-url="http://bcyyu.wang/2015/08/10/mysql新建用户权限控制/" data-id="cid5qdsbm0002p7engrc2ovqn" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Hadoop之Ambari初探" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/08/04/Hadoop之Ambari初探/" class="article-date">
+  <time datetime="2015-08-04T06:47:36.000Z" itemprop="datePublished">2015-08-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/08/04/Hadoop之Ambari初探/">Hadoop之Ambari初探</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://bcyyu.wang/2015/08/04/Hadoop之Ambari初探/" data-id="cid5qdsam0000p7en3hr787wk" class="article-share-link">Share</a>
       
       
     </footer>
@@ -141,8 +162,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>###序言</p>
-<ol>
+        <h3 id="序言">序言</h3><ol>
 <li>本人游戏公司全栈工程师一名，自己学习的东西越来越繁杂，很多琐碎的东西挤一起来很容易忘记，所以找寻了一下考虑建一个技术博客，用于记录学习的过程，也本着分享的精神，给跟我遇到同样问题的同学一个思路。额，共勉！</li>
 <li>额，整理一下技术防线，首先语言方面个人比较擅长JS和JAVA，所以一些文章基本都是基于此来说明的，首先呢，我现在处于一个创业公司，公司的hadoop生态系统是又晚负责搭建的，所以近期可能会偏这方面的各个组件的内容偏多。然后是游戏服务器架构方面以及代码级别的一些内容，都会慢慢的讲道。需要的同学可以联系我沟通。</li>
 <li><p>在记录技术生活的同时，自己也会更新一日不实名的杂记等，可能未来会加密，但前期应该是开放的。</p>
@@ -153,88 +173,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bcyyu.wang/2015/08/03/开站序言/" data-id="cicwq39j30001m1enewerbbaj" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-hello-xiaoyu" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/08/03/hello-xiaoyu/" class="article-date">
-  <time datetime="2015-08-03T14:06:47.000Z" itemprop="datePublished">2015-08-03</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/08/03/hello-xiaoyu/">hello xiaoyu</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://bcyyu.wang/2015/08/03/hello-xiaoyu/" data-id="cicwq39je0002m1enhqh1703o" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/08/03/hello-world/" class="article-date">
-  <time datetime="2015-08-03T13:58:54.000Z" itemprop="datePublished">2015-08-03</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/08/03/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick_Start">Quick Start</h2><h3 id="Create_a_new_post">Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run_server">Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate_static_files">Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://bcyyu.wang/2015/08/03/hello-world/" data-id="cicwq39jg0003m1enl0naeul4" class="article-share-link">Share</a>
+      <a data-url="http://bcyyu.wang/2015/08/03/开站序言/" data-id="cid5qdsbg0001p7en2glm703o" class="article-share-link">Share</a>
       
       
     </footer>
@@ -259,7 +198,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">4</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -271,19 +210,15 @@
       <ul>
         
           <li>
-            <a href="/2015/08/04/enable_math/">(no title)</a>
+            <a href="/2015/08/10/mysql新建用户权限控制/">mysql新建用户权限控制</a>
+          </li>
+        
+          <li>
+            <a href="/2015/08/04/Hadoop之Ambari初探/">Hadoop之Ambari初探</a>
           </li>
         
           <li>
             <a href="/2015/08/03/开站序言/">开站序言</a>
-          </li>
-        
-          <li>
-            <a href="/2015/08/03/hello-xiaoyu/">hello xiaoyu</a>
-          </li>
-        
-          <li>
-            <a href="/2015/08/03/hello-world/">Hello World</a>
           </li>
         
       </ul>
