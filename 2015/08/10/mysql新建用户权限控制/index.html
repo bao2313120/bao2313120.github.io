@@ -19,7 +19,7 @@ create user username identified by &amp;#39;password&amp;#39;
 授权
 grant all privileges on databasename.* to &amp;#39;username&amp;#39;@&amp;#39;localhost&amp;#39; identified by &amp;#39;password&amp;#39;  
 这里如果需要远程登录则将localhos">
-<meta property="og:updated_time" content="2015-08-10T09:45:03.000Z">
+<meta property="og:updated_time" content="2015-08-10T09:55:10.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql新建用户权限控制">
 <meta name="twitter:description" content="创建用户  
@@ -100,12 +100,12 @@ grant all privileges on databasename.* to &amp;#39;username&amp;#39;@&amp;#39;lo
 <p><code>grant all privileges on databasename.* to &#39;username&#39;@&#39;localhost&#39; identified by &#39;password&#39;</code>  </p>
 <p>这里如果需要远程登录则将localhost换成需要的主机名，如果是任意地点登录则为<code>%</code>， 有一点需要注意，需要在    <code>/etc/mysql/my.cnf</code> 中将</p>
 <p><code>bind-address = 127.0.0.1</code> 注释掉。</p>
-<p>####然后刷新权限<br><code>flush privileges</code></p>
+<h3 id="然后刷新权限">然后刷新权限</h3><p><code>flush privileges</code></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bcyyu.wang/2015/08/10/mysql新建用户权限控制/" data-id="cid5qkc5k00023uenlirwz8pp" class="article-share-link">Share</a>
+      <a data-url="http://bcyyu.wang/2015/08/10/mysql新建用户权限控制/" data-id="cid5qqrid0002m7enn5tyrlyw" class="article-share-link">Share</a>
       
       
     </footer>

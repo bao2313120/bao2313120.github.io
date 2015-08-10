@@ -83,8 +83,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>I</p>
-<p>工作中会使用很多的主机，偶尔用到一台很久不用的主机，需要mysql的服务，作为实验环境第一反应会去apt-get intsall mysql-server. 可是发现已经安装过。 then,what’s the password for root?</p>
+        <p>工作中会使用很多的主机，偶尔用到一台很久不用的主机，需要mysql的服务，作为实验环境第一反应会去apt-get intsall mysql-server. 可是发现已经安装过。 then,what’s the password for root?</p>
 <p>  <strong>进入免权限认证处理</strong></p>
 <p>  <code>sudo vim /etc/mysql/my.cnf</code></p>
 <p>  把<code>skip-grant-tables</code> 在[mysqld]段中。</p>
@@ -105,7 +104,7 @@ exit;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bcyyu.wang/2015/08/10/mysql忘记密码处理/" data-id="cid5qkc5l00033uene14r9qpv" class="article-share-link">Share</a>
+      <a data-url="http://bcyyu.wang/2015/08/10/mysql忘记密码处理/" data-id="cid5qqrie0003m7enf9buds4j" class="article-share-link">Share</a>
       
       
     </footer>
@@ -143,12 +142,12 @@ exit;
 <p><code>grant all privileges on databasename.* to &#39;username&#39;@&#39;localhost&#39; identified by &#39;password&#39;</code>  </p>
 <p>这里如果需要远程登录则将localhost换成需要的主机名，如果是任意地点登录则为<code>%</code>， 有一点需要注意，需要在    <code>/etc/mysql/my.cnf</code> 中将</p>
 <p><code>bind-address = 127.0.0.1</code> 注释掉。</p>
-<p>####然后刷新权限<br><code>flush privileges</code></p>
+<h3 id="然后刷新权限">然后刷新权限</h3><p><code>flush privileges</code></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bcyyu.wang/2015/08/10/mysql新建用户权限控制/" data-id="cid5qkc5k00023uenlirwz8pp" class="article-share-link">Share</a>
+      <a data-url="http://bcyyu.wang/2015/08/10/mysql新建用户权限控制/" data-id="cid5qqrid0002m7enn5tyrlyw" class="article-share-link">Share</a>
       
       
     </footer>
@@ -184,7 +183,7 @@ exit;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bcyyu.wang/2015/08/04/Hadoop之Ambari初探/" data-id="cid5qkc4k00003uenn6jmrzh8" class="article-share-link">Share</a>
+      <a data-url="http://bcyyu.wang/2015/08/04/Hadoop之Ambari初探/" data-id="cid5qqrhe0000m7en6aesbihv" class="article-share-link">Share</a>
       
       
     </footer>
@@ -227,7 +226,7 @@ exit;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bcyyu.wang/2015/08/03/开站序言/" data-id="cid5qkc5h00013uen50tus5k4" class="article-share-link">Share</a>
+      <a data-url="http://bcyyu.wang/2015/08/03/开站序言/" data-id="cid5qqria0001m7en72vtkk09" class="article-share-link">Share</a>
       
       
     </footer>
