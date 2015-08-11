@@ -255,11 +255,10 @@
 <ul>
 <li><p>我们可以挂在一块单独的硬盘，挂载到根目录下得/data目录上，之后讲安装集群过程中所有的内容都知道这个data上，即将之前的/var/log,/var/lib目录的内容都制定到/data/cm/var/log,/data/cm/var/lib里面。并且将/data/cm的目录权限授予cloudera-scm用户。</p>
 <pre><code>sudo chown cloudera-<span class="string">scm:</span>root data/
-
 sudo chown cloudera-<span class="string">scm:</span>root cm/
-</code></pre><p>  注意这里的组权限必须是root而不能是cloudera-scm，否则启动服务时会警告，虽然我也不清楚是为什么。</p>
-</li>
+</code></pre></li>
 </ul>
+<p>注意这里的组权限必须是root而不能是cloudera-scm，否则启动服务时会警告，虽然我也不清楚是为什么。</p>
 <p>如果以上的过程你都经历了，那么恭喜你，终于不要满世界的机器去看状态和改配置文件了（大公司的哥们忽略。。）！</p>
 <p>自己也刚刚开始使用，后期会继续摸索。。。</p>
 
