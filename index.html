@@ -120,7 +120,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/mysql/" style="font-size: 20px;">mysql</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+						<a href="/tags/Hadoop/" style="font-size: 20px;">Hadoop</a> <a href="/tags/mysql/" style="font-size: 20px;">mysql</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
 					</div>
 				</section>
 				
@@ -197,6 +197,155 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-dd" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/08/12/dd/" class="article-date">
+  	<time datetime="2015-08-12T10:39:38.000Z" itemprop="datePublished">2015-08-12</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/08/12/dd/">dd</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
+    <article id="post-flume搭建" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/08/12/flume搭建/" class="article-date">
+  	<time datetime="2015-08-12T09:39:51.000Z" itemprop="datePublished">2015-08-12</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/08/12/flume搭建/">flume搭建</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>游戏公司需要分析游戏用户的所有行为，现在的项目是一个消除类的休闲游戏，需要记录分析用户的每一次拉框操作。在游戏内测期间，为了快速开发，直接简单粗暴的用了mysql来记录。如今北美用户量是200W左右，每天log的数量在亿量级。so,mysql been gived up!</p>
+<p>第一阶段，我使用了hadoop+hive+sqoop2的架构来简单粗暴的搭建了一套日志生成处理分析的BI系统，懂行的人知道这显然是很low的！so，这里介绍下<a href="https://flume.apache.org/" target="_blank" rel="external">flume</a>得使用。</p>
+<p><strong>简洁</strong><br>flume是apache旗下的一套日志收集系统，现在大家使用的一般是Flume NG的版本<br>，只有一种角色就是agent。作为配置即可用的组件，有三个内容需要配置：</p>
+<ul>
+<li>source 作为数据来源</li>
+<li>sink 处理数据去向</li>
+<li>channel 连接source和sink之间的通道</li>
+</ul>
+<p><strong>安装</strong></p>
+<p>flume显然是可以用ClouderaManager来管理安装。但是现实情况是我们不需要将所有的flume agent主机纳入Cloudera的管理中。所以可以下载包之后直接<code>tar xzvf ...</code> ,需要配置一下FLUME_HOME 和JDK的PATH。</p>
+<p><strong>配置</strong></p>
+<p>首先来一个官网上的demo</p>
+<pre><code># example.conf: A single-node Flume configuration
+# Name the components on this agent
+a1.sources = r1
+a1.sinks = k1
+a1.channels = c1
+# <span class="operator"><span class="keyword">Describe</span>/configure the <span class="keyword">source</span>
+a1.sources.r1.<span class="keyword">type</span> = netcat
+a1.sources.r1.bind = localhost
+a1.sources.r1.port = <span class="number">44444</span>
+
+# <span class="keyword">Describe</span> the sink
+a1.sinks.k1.<span class="keyword">type</span> = logger
+
+# <span class="keyword">Use</span> a channel which buffers <span class="keyword">events</span> <span class="keyword">in</span> <span class="keyword">memory</span>
+a1.channels.c1.<span class="keyword">type</span> = <span class="keyword">memory</span>
+a1.channels.c1.<span class="keyword">capacity</span> = <span class="number">1000</span>
+a1.channels.c1.transactionCapacity = <span class="number">100</span>
+
+# Bind the <span class="keyword">source</span> <span class="keyword">and</span> sink <span class="keyword">to</span> the channel
+a1.sources.r1.channels = c1
+a1.sinks.k1.channel = c1</span>
+</code></pre><ul>
+<li><p>source </p>
+<ol>
+<li>avro 用于监听端口采集数据(采用avro通信协议传输)</li>
+<li>Thrift 用于监听端口采集数据(采用Thrift通信协议传输)</li>
+<li><p>exec 执行shell脚本来采集数据，一般使用：</p>
+<p> <code>tail -F [file]</code></p>
+<p> <code>a1.sources.r1.command = tail -F /var/log/secure</code><br>4.</p>
+</li>
+</ol>
+</li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop/">Hadoop</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
   
     <article id="post-ClouderaManager入门使用" class="article article-type-post" itemscope itemprop="blogPost">
   

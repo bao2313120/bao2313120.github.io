@@ -3,18 +3,21 @@
 <head>
   <meta charset="utf-8">
   
-  <title>ClouderaManager入门使用 | Gamer Bao</title>
+  <title>flume搭建 | Gamer Bao</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="因为工作原因，自己搭建Hadoop生态环境，包括hdfs，hive,sqoop2,flume在第一阶段的摸索时，使用apache系列原生的包来安装，配置，使用。磕磕绊绊花了接近半个月将整套东西应用部署到生产环境上。闲暇之后仔细研究下了各种配置，之后看到了2大神器分别是：Ambari和ClouderaManager.  对于Ambari,开始前虽然看到官网上说明了Ubuntu系统只支持到12.不过本">
+  <meta name="description" content="游戏公司需要分析游戏用户的所有行为，现在的项目是一个消除类的休闲游戏，需要记录分析用户的每一次拉框操作。在游戏内测期间，为了快速开发，直接简单粗暴的用了mysql来记录。如今北美用户量是200W左右，每天log的数量在亿量级。so,mysql been gived up!
+第一阶段，我使用了hadoop+hive+sqoop2的架构来简单粗暴的搭建了一套日志生成处理分析的BI系统，懂行的人知道这显">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ClouderaManager入门使用">
-<meta property="og:url" content="http://bcyyu.wang/2015/08/11/ClouderaManager入门使用/index.html">
+<meta property="og:title" content="flume搭建">
+<meta property="og:url" content="http://bcyyu.wang/2015/08/12/flume搭建/index.html">
 <meta property="og:site_name" content="Gamer Bao">
-<meta property="og:description" content="因为工作原因，自己搭建Hadoop生态环境，包括hdfs，hive,sqoop2,flume在第一阶段的摸索时，使用apache系列原生的包来安装，配置，使用。磕磕绊绊花了接近半个月将整套东西应用部署到生产环境上。闲暇之后仔细研究下了各种配置，之后看到了2大神器分别是：Ambari和ClouderaManager.  对于Ambari,开始前虽然看到官网上说明了Ubuntu系统只支持到12.不过本">
-<meta property="og:updated_time" content="2015-08-12T07:18:50.000Z">
+<meta property="og:description" content="游戏公司需要分析游戏用户的所有行为，现在的项目是一个消除类的休闲游戏，需要记录分析用户的每一次拉框操作。在游戏内测期间，为了快速开发，直接简单粗暴的用了mysql来记录。如今北美用户量是200W左右，每天log的数量在亿量级。so,mysql been gived up!
+第一阶段，我使用了hadoop+hive+sqoop2的架构来简单粗暴的搭建了一套日志生成处理分析的BI系统，懂行的人知道这显">
+<meta property="og:updated_time" content="2015-08-12T10:23:01.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ClouderaManager入门使用">
-<meta name="twitter:description" content="因为工作原因，自己搭建Hadoop生态环境，包括hdfs，hive,sqoop2,flume在第一阶段的摸索时，使用apache系列原生的包来安装，配置，使用。磕磕绊绊花了接近半个月将整套东西应用部署到生产环境上。闲暇之后仔细研究下了各种配置，之后看到了2大神器分别是：Ambari和ClouderaManager.  对于Ambari,开始前虽然看到官网上说明了Ubuntu系统只支持到12.不过本">
+<meta name="twitter:title" content="flume搭建">
+<meta name="twitter:description" content="游戏公司需要分析游戏用户的所有行为，现在的项目是一个消除类的休闲游戏，需要记录分析用户的每一次拉框操作。在游戏内测期间，为了快速开发，直接简单粗暴的用了mysql来记录。如今北美用户量是200W左右，每天log的数量在亿量级。so,mysql been gived up!
+第一阶段，我使用了hadoop+hive+sqoop2的架构来简单粗暴的搭建了一套日志生成处理分析的BI系统，懂行的人知道这显">
   
     <link rel="alternative" href="/atom.xml" title="Gamer Bao" type="application/atom+xml">
   
@@ -197,11 +200,11 @@
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap"><article id="post-ClouderaManager入门使用" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-flume搭建" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2015/08/11/ClouderaManager入门使用/" class="article-date">
-  	<time datetime="2015-08-11T09:43:19.000Z" itemprop="datePublished">2015-08-11</time>
+      <a href="/2015/08/12/flume搭建/" class="article-date">
+  	<time datetime="2015-08-12T09:39:51.000Z" itemprop="datePublished">2015-08-12</time>
 </a>
     </div>
   
@@ -214,7 +217,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      ClouderaManager入门使用
+      flume搭建
     </h1>
   
 
@@ -234,49 +237,51 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>  因为工作原因，自己搭建Hadoop生态环境，包括hdfs，hive,sqoop2,flume在第一阶段的摸索时，使用apache系列原生的包来安装，配置，使用。磕磕绊绊花了接近半个月将整套东西应用部署到生产环境上。闲暇之后仔细研究下了各种配置，之后看到了2大神器分别是：<a href="https://ambari.apache.org/" target="_blank" rel="external">Ambari</a>和<a href="http://www.cloudera.com/content/cloudera/zh-CN/documentation/core/v5-3-x/topics/cm_ig_install_path_a.html" target="_blank" rel="external">ClouderaManager</a>.<br>  对于Ambari,开始前虽然看到官网上说明了Ubuntu系统只支持到12.不过本着试试看看的心态研究了1天，环境搭好之后，安装<code>HDP</code>的时候系统检测那一关果然是过不去。OK，本着不跟自己过不去的原则，give up it!</p>
-<p>  ClouderaManager的使用真心让我很惊喜。</p>
-<h3 id="安装ClouderaManager"><strong>安装ClouderaManager</strong></h3><p><strong>这里以Ubuntu14.04系统为例</strong></p>
-<p>本人很懒，Couldera显然也很懒，这个发行版就是给懒人准备的嘛！<br>所以显然使用自动安装最好 </p>
-<p>1.直接在首页下载cloudera-manager-installer.bin文件 </p>
-<p>2.授予可执行权限    </p>
-<pre><code><span class="variable">$ </span>chmod u+x cloudera-manager-installer.bin
-</code></pre><p> 3.直接sudo运行安装，这里有一个地方需要注意一下。因为Cloudera如果安装失败了卸载过程非常繁杂，所以为了避免因为断网，终端安装的是发生，可以使用screen 来安装。</p>
-<pre><code><span class="variable">$ </span>sudo ./cloudera-manager-installer.bin
-</code></pre><p> 安装过程中会自动安装jdk7，所以你不要预先安装。</p>
-<p> 4.安装道路就是一系列的yes,ok。。安装成功后cloudera-server会自动启动，并监听<code>7180</code>端口<br> 之后就可以访问了，第一次默认登录账号是admin/admin.</p>
-<p> 这里有一个地方需要注意，似乎机器性能太差的机器是无法正常运行的。我没有在官网上发现这个说法，但是我使用2核4G的机器做实验安装成功之后，启动server之后过几秒就回dead。</p>
-<h3 id="安装Hadoop集群"><strong>安装Hadoop集群</strong></h3><p>在安装之前有2件事是需要大家做的。</p>
+        <p>游戏公司需要分析游戏用户的所有行为，现在的项目是一个消除类的休闲游戏，需要记录分析用户的每一次拉框操作。在游戏内测期间，为了快速开发，直接简单粗暴的用了mysql来记录。如今北美用户量是200W左右，每天log的数量在亿量级。so,mysql been gived up!</p>
+<p>第一阶段，我使用了hadoop+hive+sqoop2的架构来简单粗暴的搭建了一套日志生成处理分析的BI系统，懂行的人知道这显然是很low的！so，这里介绍下<a href="https://flume.apache.org/" target="_blank" rel="external">flume</a>得使用。</p>
+<p><strong>简洁</strong><br>flume是apache旗下的一套日志收集系统，现在大家使用的一般是Flume NG的版本<br>，只有一种角色就是agent。作为配置即可用的组件，有三个内容需要配置：</p>
 <ul>
-<li>设置每台你要加入集群中的机器之间的ssh链接</li>
-<li>就是在每主机的<code>/etc/hosts</code>文件里加入集群中的每台主机的内网IP和主机名。这样直接填进去搜索就可以了。</li>
+<li>source 作为数据来源</li>
+<li>sink 处理数据去向</li>
+<li>channel 连接source和sink之间的通道</li>
 </ul>
-<p>以admin/admin登录界面之后，是选择主机，之后选择CDH的版本，这里一般选择默认就可以了。</p>
-<p>在ssh的界面，需要指定你的cloudera-server所在机器的密钥文件。并且注定用户</p>
-<p>后面就是选择hadoop服务的安装。</p>
-<p>在这里有几个地方需要注意：</p>
-<ul>
-<li>首先Hive的元数据服务可能需要制定mysql等，这里需要在主机上<code>安装mysql的jdbc driver</code><br>,执行：</li>
+<p><strong>安装</strong></p>
+<p>flume显然是可以用ClouderaManager来管理安装。但是现实情况是我们不需要将所有的flume agent主机纳入Cloudera的管理中。所以可以下载包之后直接<code>tar xzvf ...</code> ,需要配置一下FLUME_HOME 和JDK的PATH。</p>
+<p><strong>配置</strong></p>
+<p>首先来一个官网上的demo</p>
+<pre><code># example.conf: A single-node Flume configuration
+# Name the components on this agent
+a1.sources = r1
+a1.sinks = k1
+a1.channels = c1
+# <span class="operator"><span class="keyword">Describe</span>/configure the <span class="keyword">source</span>
+a1.sources.r1.<span class="keyword">type</span> = netcat
+a1.sources.r1.bind = localhost
+a1.sources.r1.port = <span class="number">44444</span>
+
+# <span class="keyword">Describe</span> the sink
+a1.sinks.k1.<span class="keyword">type</span> = logger
+
+# <span class="keyword">Use</span> a channel which buffers <span class="keyword">events</span> <span class="keyword">in</span> <span class="keyword">memory</span>
+a1.channels.c1.<span class="keyword">type</span> = <span class="keyword">memory</span>
+a1.channels.c1.<span class="keyword">capacity</span> = <span class="number">1000</span>
+a1.channels.c1.transactionCapacity = <span class="number">100</span>
+
+# Bind the <span class="keyword">source</span> <span class="keyword">and</span> sink <span class="keyword">to</span> the channel
+a1.sources.r1.channels = c1
+a1.sinks.k1.channel = c1</span>
+</code></pre><ul>
+<li><p>source </p>
+<ol>
+<li>avro 用于监听端口采集数据(采用avro通信协议传输)</li>
+<li>Thrift 用于监听端口采集数据(采用Thrift通信协议传输)</li>
+<li><p>exec 执行shell脚本来采集数据，一般使用：</p>
+<p> <code>tail -F [file]</code></p>
+<p> <code>a1.sources.r1.command = tail -F /var/log/secure</code><br>4.</p>
+</li>
+</ol>
+</li>
 </ul>
-<pre><code>sudo apt-get <span class="operator"><span class="keyword">install</span> libmysql-<span class="keyword">java</span></span>
-</code></pre><p>否在会在启动服务时报错误。</p>
-<ul>
-<li>另外一个问题就是关于cloudera5 里新出现的单用户模式，据官方文档上说是可以用单个用户执行所有的服务，但是要使用这个单个用户模式会涉及到很多的用户权限问题，我自己就在这个问题上坑了很久。</li>
-</ul>
-<p>后来经过实践发现可以按照<a href="http://www.cloudera.com/content/cloudera/zh-CN/documentation/core/v5-3-x/topics/install_singleuser_reqts.html?scroll=xd_583c10bfdbd326ba--69adf108-1492ec0ce48--7ade__section_n53_hd1_fq" target="_blank" rel="external">官网上</a>的说明操作，<code>注意：</code>我们采用的自动安装模式不需要进行B和C中的设置。即只操作：</p>
-<pre><code>usermod -<span class="tag">a</span> -G sudo cloudera-scm
-</code></pre><p>取消注释：/etc/pam.d/su 里，session required pam_limits.so。</p>
-<p>其他操作则不用进行。</p>
-<h3 id="技巧"><strong>技巧</strong></h3><p>经过趟坑，发现有以下几点可以避免权限错误。</p>
-<ul>
-<li><p>我们可以挂在一块单独的硬盘，挂载到根目录下得/data目录上，之后讲安装集群过程中所有的内容都知道这个data上，即将之前的/var/log,/var/lib目录的内容都制定到/data/cm/var/log,/data/cm/var/lib里面。并且将/data/cm的目录权限授予cloudera-scm用户。</p>
-<pre><code>sudo chown cloudera-<span class="string">scm:</span>root data/
-sudo chown cloudera-<span class="string">scm:</span>root cm/
-</code></pre></li>
-</ul>
-<p>注意这里的组权限必须是root而不能是cloudera-scm，否则启动服务时会警告，虽然我也不清楚是为什么。</p>
-<p>如果以上的过程你都经历了，那么恭喜你，终于不要满世界的机器去看状态和改配置文件了（大公司的哥们忽略。。）！</p>
-<p>自己也刚刚开始使用，后期会继续摸索。。。</p>
 
       
     </div>
@@ -286,18 +291,18 @@ sudo chown cloudera-<span class="string">scm:</span>root cm/
     
 <nav id="article-nav">
   
-    <a href="/2015/08/12/flume搭建/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2015/08/12/dd/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
-          flume搭建
+          dd
         
       </div>
     </a>
   
   
-    <a href="/2015/08/10/mysql忘记密码处理/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">mysql忘记密码处理</div>
+    <a href="/2015/08/11/ClouderaManager入门使用/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">ClouderaManager入门使用</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -326,7 +331,7 @@ sudo chown cloudera-<span class="string">scm:</span>root cm/
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="ClouderaManager入门使用" data-title="ClouderaManager入门使用" data-url="http://bcyyu.wang/2015/08/11/ClouderaManager入门使用/"></div>
+	<div class="ds-thread" data-thread-key="flume搭建" data-title="flume搭建" data-url="http://bcyyu.wang/2015/08/12/flume搭建/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
