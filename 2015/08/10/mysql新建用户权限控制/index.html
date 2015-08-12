@@ -19,7 +19,7 @@ create user username identified by &amp;#39;password&amp;#39;
 授权
 grant all privileges on databasename.* to &amp;#39;username&amp;#39;@&amp;#39;localhost&amp;#39; identified by &amp;#39;password&amp;#39;  
 这里如果需要远程登录则将localhos">
-<meta property="og:updated_time" content="2015-08-10T09:55:10.000Z">
+<meta property="og:updated_time" content="2015-08-12T07:09:35.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql新建用户权限控制">
 <meta name="twitter:description" content="创建用户  
@@ -247,6 +247,7 @@ grant all privileges on databasename.* to &amp;#39;username&amp;#39;@&amp;#39;lo
 <p>这里如果需要远程登录则将localhost换成需要的主机名，如果是任意地点登录则为<code>%</code>， 有一点需要注意，需要在    <code>/etc/mysql/my.cnf</code> 中将</p>
 <p><code>bind-address = 127.0.0.1</code> 注释掉。</p>
 <h3 id="然后刷新权限">然后刷新权限</h3><p><code>flush privileges</code></p>
+<p><span id="busuanzi_container_page_pv"><br>  本文总阅读量<span id="busuanzi_value_page_pv"></span>次<br></span></p>
 
       
     </div>
@@ -330,9 +331,6 @@ grant all privileges on databasename.* to &amp;#39;username&amp;#39;@&amp;#39;lo
       	</div>
         <span id="busuanzi_container_site_pv">
     本站总访问量<span id="busuanzi_value_site_pv"></span>次
-</span>
-<span id="busuanzi_container_page_pv">
-  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
 </span>
     </div>
   </div>
