@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Gamer Bao">
 <meta property="og:description" content="游戏公司需要分析游戏用户的所有行为，现在的项目是一个消除类的休闲游戏，需要记录分析用户的每一次拉框操作。在游戏内测期间，为了快速开发，直接简单粗暴的用了mysql来记录。如今北美用户量是200W左右，每天log的数量在亿量级。so,mysql been gived up!
 第一阶段，我使用了hadoop+hive+sqoop2的架构来简单粗暴的搭建了一套日志生成处理分析的BI系统，懂行的人知道这显">
-<meta property="og:updated_time" content="2015-08-13T03:44:48.000Z">
+<meta property="og:updated_time" content="2015-08-13T03:51:16.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="flume搭建">
 <meta name="twitter:description" content="游戏公司需要分析游戏用户的所有行为，现在的项目是一个消除类的休闲游戏，需要记录分析用户的每一次拉框操作。在游戏内测期间，为了快速开发，直接简单粗暴的用了mysql来记录。如今北美用户量是200W左右，每天log的数量在亿量级。so,mysql been gived up!
@@ -270,8 +270,7 @@ a1.channels.c1.transactionCapacity = <span class="number">100</span>
 # Bind the <span class="keyword">source</span> <span class="keyword">and</span> sink <span class="keyword">to</span> the channel
 a1.sources.r1.channels = c1
 a1.sinks.k1.channel = c1</span>
-</code></pre><p>###Source </p>
-<ol>
+</code></pre><h3 id="Source">Source</h3><ol>
 <li><code>avro</code> 用于监听端口采集数据(采用avro通信协议传输),一般agent之间传输时可以使用。</li>
 <li><code>Thrift</code> 用于监听端口采集数据(采用Thrift通信协议传输)，同上</li>
 <li><p><code>exec</code> 执行shell脚本来采集数据，一般使用：</p>
@@ -288,20 +287,18 @@ a1.sinks.k1.channel = c1</span>
 <li><code>spooldir</code> 监控某个目录下的所有文件，将其新加入的文件作为数据源传输走；<br>每传输玩一个文件后，会被rename成其他名字（表示已经传输过）或者删掉；<br>默认监控目录下的文件具有：immutable、uniquely-named属性，否则会出错；</li>
 <li><code>kafka</code> 获取kafka产生的的数据（可能后面会采用的架构）</li>
 </ol>
-<p>###Channels</p>
-<ol>
+<h3 id="Channels">Channels</h3><ol>
 <li><code>memory channel</code> 消息放在内存中，提高吞吐，但不可靠，可能丢失数据</li>
 <li><code>JDBC channel</code> 内置的derb数据库，对event进行了持久化，提供高可靠性；<br>看来是取代同样具有持久特性的file channel</li>
 <li><code>Kafka Channel</code> 结合kafka使用</li>
 <li><code>File</code> 会对数据进行持久化，保证数据安全，有损性能</li>
 <li><code>SPILLABLEMEMORY</code> 类似与memory和file的折中方法，优先使用memory,剩下的就都持久化到file中等待</li>
 </ol>
-<p>#####Channel Selectors<br>这里介绍一下这个<br>这里的channel Selectors主要用来处理一个source有两个及以上的的sink的时候，需要通过不同的channel来发送，这个时候就需要channel selectors .</p>
+<h5 id="Channel_Selectors">Channel Selectors</h5><p>这里介绍一下这个<br>这里的channel Selectors主要用来处理一个source有两个及以上的的sink的时候，需要通过不同的channel来发送，这个时候就需要channel selectors .</p>
 <p>官方文档上channel selectors 有两种类型:      </p>
 <p>Replicating Channel Selector (default)</p>
 <p>Multiplexing Channel Selector<br>这里具体是设置可以参照<a href="http://blog.csdn.net/xiao_jun_0820/article/details/38116103" target="_blank" rel="external">这篇博客</a></p>
-<p>###Sinks</p>
-<p>sinks，负责处理source来得数据。sink的种类也有很多<br>hdfs,hive,logger,Avro,Thrift,IRC,file_roll,null,Hbase,asynchbase,MorphlineSolrSink,ElasticSearchSink,Kite Dataset,Kafka.</p>
+<h3 id="Sinks">Sinks</h3><p>sinks，负责处理source来得数据。sink的种类也有很多<br>hdfs,hive,logger,Avro,Thrift,IRC,file_roll,null,Hbase,asynchbase,MorphlineSolrSink,ElasticSearchSink,Kite Dataset,Kafka.</p>
 <p>因为这里没有一个个使用过，大家可以去<a href="https://flume.apache.org/FlumeUserGuide.html" target="_blank" rel="external">flume</a>官方文档上查看。我自己用的应该是Hive,所以后面应该会写一篇Hive作为sinks的详尽的文章。</p>
 <p>下面给出一个测试环境的配置代码<br>测试环境有2台主机，track主机会产生日志文件储存在文件中，core主机是中心节点，用于收集数据并输出出来。</p>
 <p><strong>track主机</strong></p>
