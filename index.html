@@ -226,7 +226,7 @@
       
         <p>游戏公司需要分析游戏用户的所有行为，现在的项目是一个消除类的休闲游戏，需要记录分析用户的每一次拉框操作。在游戏内测期间，为了快速开发，直接简单粗暴的用了mysql来记录。如今北美用户量是200W左右，每天log的数量在亿量级。so,mysql been gived up!</p>
 <p>第一阶段，我使用了hadoop+hive+sqoop2的架构来简单粗暴的搭建了一套日志生成处理分析的BI系统，懂行的人知道这显然是很low的！so，这里介绍下<a href="https://flume.apache.org/" target="_blank" rel="external">flume</a>得使用。</p>
-<p><strong>简洁</strong><br>flume是apache旗下的一套日志收集系统，现在大家使用的一般是Flume NG的版本<br>，只有一种角色就是agent。作为配置即可用的组件，有三个内容需要配置：</p>
+<p><strong>简介</strong><br>flume是apache旗下的一套日志收集系统，现在大家使用的一般是Flume NG的版本<br>，只有一种角色就是agent。作为配置即可用的组件，有三个内容需要配置：</p>
 <ul>
 <li>source 作为数据来源</li>
 <li>sink 处理数据去向</li>
@@ -257,18 +257,89 @@ a1.channels.c1.transactionCapacity = <span class="number">100</span>
 # Bind the <span class="keyword">source</span> <span class="keyword">and</span> sink <span class="keyword">to</span> the channel
 a1.sources.r1.channels = c1
 a1.sinks.k1.channel = c1</span>
-</code></pre><ul>
-<li><p>source </p>
+</code></pre><p>###Source </p>
 <ol>
-<li>avro 用于监听端口采集数据(采用avro通信协议传输)</li>
-<li>Thrift 用于监听端口采集数据(采用Thrift通信协议传输)</li>
-<li><p>exec 执行shell脚本来采集数据，一般使用：</p>
+<li><code>avro</code> 用于监听端口采集数据(采用avro通信协议传输),一般agent之间传输时可以使用。</li>
+<li><code>Thrift</code> 用于监听端口采集数据(采用Thrift通信协议传输)，同上</li>
+<li><p><code>exec</code> 执行shell脚本来采集数据，一般使用：</p>
 <p> <code>tail -F [file]</code></p>
-<p> <code>a1.sources.r1.command = tail -F /var/log/secure</code><br>4.</p>
+<p> <code>a1.sources.r1.command = tail -F /var/log/secure</code></p>
+<p> 支持对命令或者脚本的重启</p>
 </li>
+<li><code>jms</code> 从消息队列中获取消息</li>
+<li><code>netcat</code> 监控指定端口，每一行作为一个event传输。</li>
+<li><code>http</code> 支持http的post和get,需要指定handler</li>
+<li><code>Scribe</code> 主要用于兼容Scribe.</li>
+<li><code>syslog</code> 监听syslog，支持tcp和udp，支持多端口监听</li>
+<li><code>sequence</code> 用于测试，产生自增编号的event</li>
+<li><code>spooldir</code> 监控某个目录下的所有文件，将其新加入的文件作为数据源传输走；<br>每传输玩一个文件后，会被rename成其他名字（表示已经传输过）或者删掉；<br>默认监控目录下的文件具有：immutable、uniquely-named属性，否则会出错；</li>
+<li><code>kafka</code> 获取kafka产生的的数据（可能后面会采用的架构）</li>
 </ol>
-</li>
-</ul>
+<p>###Channels</p>
+<ol>
+<li><code>memory channel</code> 消息放在内存中，提高吞吐，但不可靠，可能丢失数据</li>
+<li><code>JDBC channel</code> 内置的derb数据库，对event进行了持久化，提供高可靠性；<br>看来是取代同样具有持久特性的file channel</li>
+<li><code>Kafka Channel</code> 结合kafka使用</li>
+<li><code>File</code> 会对数据进行持久化，保证数据安全，有损性能</li>
+<li><code>SPILLABLEMEMORY</code> 类似与memory和file的折中方法，优先使用memory,剩下的就都持久化到file中等待</li>
+</ol>
+<p>#####Channel Selectors<br>这里介绍一下这个<br>这里的channel Selectors主要用来处理一个source有两个及以上的的sink的时候，需要通过不同的channel来发送，这个时候就需要channel selectors .</p>
+<p>官方文档上channel selectors 有两种类型:      </p>
+<p>Replicating Channel Selector (default)</p>
+<p>Multiplexing Channel Selector<br>这里具体是设置可以参照<a href="http://blog.csdn.net/xiao_jun_0820/article/details/38116103" target="_blank" rel="external">这篇博客</a></p>
+<p>###Sinks</p>
+<p>sinks，负责处理source来得数据。sink的种类也有很多<br>hdfs,hive,logger,Avro,Thrift,IRC,file_roll,null,Hbase,asynchbase,MorphlineSolrSink,ElasticSearchSink,Kite Dataset,Kafka.</p>
+<p>因为这里没有一个个使用过，大家可以去<a href="https://flume.apache.org/FlumeUserGuide.html" target="_blank" rel="external">flume</a>官方文档上查看。我自己用的应该是Hive,所以后面应该会写一篇Hive作为sinks的详尽的文章。</p>
+<p>下面给出一个测试环境的配置代码<br>测试环境有2台主机，track主机会产生日志文件储存在文件中，core主机是中心节点，用于收集数据并输出出来。</p>
+<p><strong>track主机</strong></p>
+<p> 文件名：flume-track.conf</p>
+<pre><code><span class="title">agent</span>.sources = r1
+<span class="title">agent</span>.channels = c1
+<span class="title">agent</span>.sinks = s1
+
+#<span class="type">For</span> each one <span class="keyword">of</span> the sources, the <span class="typedef"><span class="keyword">type</span> is defined</span>
+<span class="title">agent</span>.sources.r1.<span class="typedef"><span class="keyword">type</span> = exec</span>
+
+<span class="title">agent</span>.sources.r1.command = tail -f /data/track_diagon/data/log-<span class="number">9</span>-<span class="number">2015</span>-<span class="number">08</span>-<span class="number">11</span>
+
+# <span class="type">Each</span> sink's <span class="typedef"><span class="keyword">type</span> must be defined</span>
+<span class="title">agent</span>.sinks.s1.<span class="typedef"><span class="keyword">type</span> = avro</span>
+<span class="title">agent</span>.sinks.s1.hostname = <span class="number">172.31</span><span class="number">.30</span><span class="number">.204</span>
+<span class="title">agent</span>.sinks.s1.<span class="foreign"><span class="keyword">port</span> = 60000</span>
+
+# <span class="type">Each</span> channel's <span class="typedef"><span class="keyword">type</span> is defined.</span>
+<span class="title">agent</span>.channels.c1.<span class="typedef"><span class="keyword">type</span> = memory</span>
+<span class="title">agent</span>.channels.c1.capacity = <span class="number">100</span>
+# <span class="type">Other</span> config values specific to each <span class="typedef"><span class="keyword">type</span> of channel<span class="container">(<span class="title">sink</span> <span class="title">or</span> <span class="title">source</span>)</span></span>
+# can be defined <span class="keyword">as</span> well
+<span class="title">agent</span>.sources.r1.channels = c1
+<span class="title">agent</span>.sinks.s1.channel = c1
+</code></pre><p><strong>core主机</strong></p>
+<p>文件名：flume-core.conf</p>
+<pre><code><span class="title">agent</span>.sources = r1
+<span class="title">agent</span>.channels = c1
+<span class="title">agent</span>.sinks = s1
+
+# <span class="type">For</span> each one <span class="keyword">of</span> the sources, the <span class="typedef"><span class="keyword">type</span> is defined</span>
+<span class="title">agent</span>.sources.r1.<span class="typedef"><span class="keyword">type</span> = avro</span>
+<span class="title">agent</span>.sources.r1.bind = <span class="number">172.31</span><span class="number">.30</span><span class="number">.204</span>
+<span class="title">agent</span>.sources.r1.<span class="foreign"><span class="keyword">port</span> = 60000</span>
+
+# <span class="type">Each</span> sink's <span class="typedef"><span class="keyword">type</span> must be defined</span>
+<span class="title">agent</span>.sinks.s1.<span class="typedef"><span class="keyword">type</span> = logger</span>
+
+# <span class="type">Each</span> channel's <span class="typedef"><span class="keyword">type</span> is defined.</span>
+<span class="title">agent</span>.channels.memoryChannel.<span class="typedef"><span class="keyword">type</span> = memory</span>
+<span class="title">agent</span>.channels.memoryChannel.capacity = <span class="number">1000</span>
+# <span class="type">Other</span> config values specific to each <span class="typedef"><span class="keyword">type</span> of channel<span class="container">(<span class="title">sink</span> <span class="title">or</span> <span class="title">source</span>)</span></span>
+# can be defined <span class="keyword">as</span> well
+<span class="title">agent</span>.sources.r1.channels = c1
+<span class="title">agent</span>.sinks.s1.channel = c1
+</code></pre><p>然后先在core主机的flume文件价下运行：</p>
+<pre><code>bin/flume-ng  agent -c <span class="keyword">conf</span> -f <span class="keyword">conf</span>/flume-core.<span class="keyword">conf</span> -<span class="keyword">n</span> agent 
+</code></pre><p>然后在track主机上运行：</p>
+<pre><code>bin/flume-ng  agent -c conf -f conf/flume-track<span class="class">.conf</span> -n agent -Dflume<span class="class">.root</span><span class="class">.logger</span>=INFO,console
+</code></pre><p>这样如果track主机的日志文件内容增加，core主机就会输出日志文件所生成的event!</p>
 
       
     </div>
