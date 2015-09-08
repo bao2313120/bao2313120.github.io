@@ -3,17 +3,42 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Tag: 随笔 | Gamer Bao</title>
+  <title>Gamer Bao</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
-<meta property="og:type" content="website">
+  <meta name="description" content="Compass项目架构变化前版本roles:
+
+trackserver        
+master
+
+处理日志脚本
+trackserver生成log-[m1-9]-date文件名的日志文件，定时执行batchHiveData.js，处理后日期的生成log-hive-date文件，过期日志放在log-out/目录下。
+load日志脚本
+master在处理日志脚本执行完成后，通过batch-load">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Gamer Bao">
-<meta property="og:url" content="http://bcyyu.wang/tags/随笔/index.html">
+<meta property="og:url" content="http://bcyyu.wang/2015/09/08/track原始数据流程方案对比/index.html">
 <meta property="og:site_name" content="Gamer Bao">
-<meta property="og:description">
+<meta property="og:description" content="Compass项目架构变化前版本roles:
+
+trackserver        
+master
+
+处理日志脚本
+trackserver生成log-[m1-9]-date文件名的日志文件，定时执行batchHiveData.js，处理后日期的生成log-hive-date文件，过期日志放在log-out/目录下。
+load日志脚本
+master在处理日志脚本执行完成后，通过batch-load">
+<meta property="og:updated_time" content="2015-09-08T03:17:47.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Gamer Bao">
-<meta name="twitter:description">
+<meta name="twitter:description" content="Compass项目架构变化前版本roles:
+
+trackserver        
+master
+
+处理日志脚本
+trackserver生成log-[m1-9]-date文件名的日志文件，定时执行batchHiveData.js，处理后日期的生成log-hive-date文件，过期日志放在log-out/目录下。
+load日志脚本
+master在处理日志脚本执行完成后，通过batch-load">
   
     <link rel="alternative" href="/atom.xml" title="Gamer Bao" type="application/atom+xml">
   
@@ -196,53 +221,113 @@
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap">
+      <div class="body-wrap"><article id="post-track原始数据流程方案对比" class="article article-type-post" itemscope itemprop="blogPost">
   
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2015" class="archive-year">2015</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2015/08/03/开站序言/" class="archive-article-date">
-  	<time datetime="2015-08-03T14:31:43.000Z" itemprop="datePublished">Aug 3</time>
+    <div class="article-meta">
+      <a href="/2015/09/08/track原始数据流程方案对比/" class="article-date">
+  	<time datetime="2015-09-08T03:17:47.000Z" itemprop="datePublished">2015-09-08</time>
 </a>
-        </div>
-    	 
+    </div>
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/08/03/开站序言/">开站序言</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/随笔/">随笔</a></li></ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
+  <div class="article-inner">
     
+      <input type="hidden" class="isFancy" />
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Compass项目架构变化">Compass项目架构变化</h2><h3 id="前版本">前版本</h3><p><strong>roles</strong>:</p>
+<ul>
+<li>trackserver        </li>
+<li>master</li>
+</ul>
+<p><strong>处理日志脚本</strong></p>
+<p>trackserver生成log-[m1-9]-date文件名的日志文件，定时执行batchHiveData.js，处理后日期的生成log-hive-date文件，过期日志放在log-out/目录下。</p>
+<p><strong>load日志脚本</strong></p>
+<p>master在处理日志脚本执行完成后，通过batch-load-hive-data.sh.<br>scp log-hive-date 及log-out/的数据到master主机，并按照正常数据和过期的数据的区别按日期load到hive中。<br>之后，用sqoop，load-user-data.sh将mysql中的user相关的快照表load到hive中。</p>
+<p>###新版本<br><strong>roles</strong>  </p>
+<ul>
+<li>trackserver</li>
+<li>flume-agent</li>
+<li><p>flume-collect</p>
+<p>trackserver 产生log-[1-9] 文件名的符合hive需求的文件，flume-agent 通过execSource ，用tailf这些文件变化将log日志传输到flume-collect,使用hdfssinks 将日志流式存入hdfs中。然后依据数据格式建立不同的hive表结构进行数据查询。</p>
+<p><strong>注意点</strong></p>
+</li>
+</ul>
+<ol>
+<li><p>因为公司数据项目繁多，需要按照action和date对hive进行分区，我们hive采用外部表的方式，所以需要对log日志进行处理，我使用regex_extractor，将log日志的action和time抽取出来，放到head中，通过events传到sinks中。注意：我们的log日志中记录的是10位的timestamp，而flume中的时间占位符识别的是13位的timestamp，所以我对日志中的timestamp进行了*1000的处理。进而通过actionsub做一级分区，而datesub做二级分区。</p>
+</li>
+<li><p>因为hive外部表的元数据分区信息需要受到插入，否则哪怕location到准确目录，也是读取不到数据的。我采用的方案是采用定时任务，每天执行一次批量插入当前日期前后7天的分区信息。</p>
+</li>
+</ol>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/09/08/Compass项目架构变化/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Compass项目架构变化
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/08/12/flume搭建/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">flume搭建</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="track原始数据流程方案对比" data-title="" data-url="http://bcyyu.wang/2015/09/08/track原始数据流程方案对比/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
 
 </div>
             <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
@@ -276,9 +361,9 @@
 		mathjax: true,
 		animate: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false
 	}
