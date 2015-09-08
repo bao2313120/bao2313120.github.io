@@ -5,7 +5,7 @@
   
   <title>Compass项目架构变化 | Gamer Bao</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Compass项目架构变化前版本roles:
+  <meta name="description" content="前版本roles:
 
 trackserver        
 master
@@ -13,12 +13,12 @@ master
 处理日志脚本
 trackserver生成log-[m1-9]-date文件名的日志文件，定时执行batchHiveData.js，处理后日期的生成log-hive-date文件，过期日志放在log-out/目录下。
 load日志脚本
-master在处理日志脚本执行完成后，通过batch-load">
+master在处理日志脚本执行完成后，通过batch-load-hive-data.sh">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Compass项目架构变化">
 <meta property="og:url" content="http://bcyyu.wang/2015/09/08/Compass项目架构变化/index.html">
 <meta property="og:site_name" content="Gamer Bao">
-<meta property="og:description" content="Compass项目架构变化前版本roles:
+<meta property="og:description" content="前版本roles:
 
 trackserver        
 master
@@ -26,11 +26,11 @@ master
 处理日志脚本
 trackserver生成log-[m1-9]-date文件名的日志文件，定时执行batchHiveData.js，处理后日期的生成log-hive-date文件，过期日志放在log-out/目录下。
 load日志脚本
-master在处理日志脚本执行完成后，通过batch-load">
-<meta property="og:updated_time" content="2015-09-08T03:50:21.000Z">
+master在处理日志脚本执行完成后，通过batch-load-hive-data.sh">
+<meta property="og:updated_time" content="2015-09-08T03:59:22.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Compass项目架构变化">
-<meta name="twitter:description" content="Compass项目架构变化前版本roles:
+<meta name="twitter:description" content="前版本roles:
 
 trackserver        
 master
@@ -38,7 +38,7 @@ master
 处理日志脚本
 trackserver生成log-[m1-9]-date文件名的日志文件，定时执行batchHiveData.js，处理后日期的生成log-hive-date文件，过期日志放在log-out/目录下。
 load日志脚本
-master在处理日志脚本执行完成后，通过batch-load">
+master在处理日志脚本执行完成后，通过batch-load-hive-data.sh">
   
     <link rel="alternative" href="/atom.xml" title="Gamer Bao" type="application/atom+xml">
   
@@ -258,7 +258,7 @@ master在处理日志脚本执行完成后，通过batch-load">
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="Compass项目架构变化">Compass项目架构变化</h2><h3 id="前版本">前版本</h3><p><strong>roles</strong>:</p>
+        <h3 id="前版本">前版本</h3><p><strong>roles</strong>:</p>
 <ul>
 <li>trackserver        </li>
 <li>master</li>
