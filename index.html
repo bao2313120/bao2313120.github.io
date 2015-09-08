@@ -276,69 +276,6 @@
 
 
   
-    <article id="post-track原始数据流程方案对比" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/09/08/track原始数据流程方案对比/" class="article-date">
-  	<time datetime="2015-09-08T03:17:47.000Z" itemprop="datePublished">2015-09-08</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Compass项目架构变化">Compass项目架构变化</h2><h3 id="前版本">前版本</h3><p><strong>roles</strong>:</p>
-<ul>
-<li>trackserver        </li>
-<li>master</li>
-</ul>
-<p><strong>处理日志脚本</strong></p>
-<p>trackserver生成log-[m1-9]-date文件名的日志文件，定时执行batchHiveData.js，处理后日期的生成log-hive-date文件，过期日志放在log-out/目录下。</p>
-<p><strong>load日志脚本</strong></p>
-<p>master在处理日志脚本执行完成后，通过batch-load-hive-data.sh.<br>scp log-hive-date 及log-out/的数据到master主机，并按照正常数据和过期的数据的区别按日期load到hive中。<br>之后，用sqoop，load-user-data.sh将mysql中的user相关的快照表load到hive中。</p>
-<p>###新版本<br><strong>roles</strong>  </p>
-<ul>
-<li>trackserver</li>
-<li>flume-agent</li>
-<li><p>flume-collect</p>
-<p>trackserver 产生log-[1-9] 文件名的符合hive需求的文件，flume-agent 通过execSource ，用tailf这些文件变化将log日志传输到flume-collect,使用hdfssinks 将日志流式存入hdfs中。然后依据数据格式建立不同的hive表结构进行数据查询。</p>
-<p><strong>注意点</strong></p>
-</li>
-</ul>
-<ol>
-<li><p>因为公司数据项目繁多，需要按照action和date对hive进行分区，我们hive采用外部表的方式，所以需要对log日志进行处理，我使用regex_extractor，将log日志的action和time抽取出来，放到head中，通过events传到sinks中。注意：我们的log日志中记录的是10位的timestamp，而flume中的时间占位符识别的是13位的timestamp，所以我对日志中的timestamp进行了*1000的处理。进而通过actionsub做一级分区，而datesub做二级分区。</p>
-</li>
-<li><p>因为hive外部表的元数据分区信息需要受到插入，否则哪怕location到准确目录，也是读取不到数据的。我采用的方案是采用定时任务，每天执行一次批量插入当前日期前后7天的分区信息。</p>
-</li>
-</ol>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
     <article id="post-flume搭建" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
