@@ -233,7 +233,7 @@
 <p>trackserver生成log-[m1-9]-date文件名的日志文件，定时执行batchHiveData.js，处理后日期的生成log-hive-date文件，过期日志放在log-out/目录下。</p>
 <p><strong>load日志脚本</strong></p>
 <p>master在处理日志脚本执行完成后，通过batch-load-hive-data.sh.<br>scp log-hive-date 及log-out/的数据到master主机，并按照正常数据和过期的数据的区别按日期load到hive中。<br>之后，用sqoop，load-user-data.sh将mysql中的user相关的快照表load到hive中。</p>
-<p>###新版本<br><strong>roles</strong>  </p>
+<h3 id="新版本">新版本</h3><p><strong>roles</strong>  </p>
 <ul>
 <li>trackserver</li>
 <li>flume-agent</li>
