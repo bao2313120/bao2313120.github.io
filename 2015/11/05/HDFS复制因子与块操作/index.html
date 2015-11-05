@@ -3,18 +3,19 @@
 <head>
   <meta charset="utf-8">
   
-  <title>ClouderaManager入门使用 | Gamer Bao</title>
+  <title>HDFS复制因子与块操作 | Gamer Bao</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="因为工作原因，自己搭建Hadoop生态环境，包括hdfs，hive,sqoop2,flume在第一阶段的摸索时，使用apache系列原生的包来安装，配置，使用。磕磕绊绊花了接近半个月将整套东西应用部署到生产环境上。闲暇之后仔细研究下了各种配置，之后看到了2大神器分别是：Ambari和ClouderaManager.  对于Ambari,开始前虽然看到官网上说明了Ubuntu系统只支持到12.不过本">
+  <meta name="description" content="关于复制因子HDFS文件系统中文件存储的最小单位是块，块的大小是可以在配置文件中配置的，一般配置为64M或者128M,这就意味着哪怕一个文件只有1K,也会占用集群实际硬盘128M的硬盘，这种设计的初衷是为了尽可能的减小维护数据目录的成本，增快数据查找,归并的速度。从另一方面也要求我们在存入数据时尽量减少零碎数据的产生。HDFS可以通过replication这个参数来改变集群中的复制因子。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ClouderaManager入门使用">
-<meta property="og:url" content="http://bcyyu.wang/2015/08/11/ClouderaManager入门使用/index.html">
+<meta property="og:title" content="HDFS复制因子与块操作">
+<meta property="og:url" content="http://bcyyu.wang/2015/11/05/HDFS复制因子与块操作/index.html">
 <meta property="og:site_name" content="Gamer Bao">
-<meta property="og:description" content="因为工作原因，自己搭建Hadoop生态环境，包括hdfs，hive,sqoop2,flume在第一阶段的摸索时，使用apache系列原生的包来安装，配置，使用。磕磕绊绊花了接近半个月将整套东西应用部署到生产环境上。闲暇之后仔细研究下了各种配置，之后看到了2大神器分别是：Ambari和ClouderaManager.  对于Ambari,开始前虽然看到官网上说明了Ubuntu系统只支持到12.不过本">
-<meta property="og:updated_time" content="2015-08-13T03:05:16.000Z">
+<meta property="og:description" content="关于复制因子HDFS文件系统中文件存储的最小单位是块，块的大小是可以在配置文件中配置的，一般配置为64M或者128M,这就意味着哪怕一个文件只有1K,也会占用集群实际硬盘128M的硬盘，这种设计的初衷是为了尽可能的减小维护数据目录的成本，增快数据查找,归并的速度。从另一方面也要求我们在存入数据时尽量减少零碎数据的产生。HDFS可以通过replication这个参数来改变集群中的复制因子。">
+<meta property="og:image" content="http://bcygamer.wang/img/fsckcheck.png">
+<meta property="og:updated_time" content="2015-11-05T10:04:27.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ClouderaManager入门使用">
-<meta name="twitter:description" content="因为工作原因，自己搭建Hadoop生态环境，包括hdfs，hive,sqoop2,flume在第一阶段的摸索时，使用apache系列原生的包来安装，配置，使用。磕磕绊绊花了接近半个月将整套东西应用部署到生产环境上。闲暇之后仔细研究下了各种配置，之后看到了2大神器分别是：Ambari和ClouderaManager.  对于Ambari,开始前虽然看到官网上说明了Ubuntu系统只支持到12.不过本">
+<meta name="twitter:title" content="HDFS复制因子与块操作">
+<meta name="twitter:description" content="关于复制因子HDFS文件系统中文件存储的最小单位是块，块的大小是可以在配置文件中配置的，一般配置为64M或者128M,这就意味着哪怕一个文件只有1K,也会占用集群实际硬盘128M的硬盘，这种设计的初衷是为了尽可能的减小维护数据目录的成本，增快数据查找,归并的速度。从另一方面也要求我们在存入数据时尽量减少零碎数据的产生。HDFS可以通过replication这个参数来改变集群中的复制因子。">
   
     <link rel="alternative" href="/atom.xml" title="Gamer Bao" type="application/atom+xml">
   
@@ -197,11 +198,11 @@
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap"><article id="post-ClouderaManager入门使用" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-HDFS复制因子与块操作" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2015/08/11/ClouderaManager入门使用/" class="article-date">
-  	<time datetime="2015-08-11T09:43:19.000Z" itemprop="datePublished">2015-08-11</time>
+      <a href="/2015/11/05/HDFS复制因子与块操作/" class="article-date">
+  	<time datetime="2015-11-05T07:41:40.000Z" itemprop="datePublished">2015-11-05</time>
 </a>
     </div>
   
@@ -214,7 +215,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      ClouderaManager入门使用
+      HDFS复制因子与块操作
     </h1>
   
 
@@ -223,7 +224,7 @@
       <div class="article-info article-info-post">
         
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop/">Hadoop</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HDFS/">HDFS</a></li></ul>
 	</div>
 
         
@@ -234,49 +235,59 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>  因为工作原因，自己搭建Hadoop生态环境，包括hdfs，hive,sqoop2,flume在第一阶段的摸索时，使用apache系列原生的包来安装，配置，使用。磕磕绊绊花了接近半个月将整套东西应用部署到生产环境上。闲暇之后仔细研究下了各种配置，之后看到了2大神器分别是：<a href="https://ambari.apache.org/" target="_blank" rel="external">Ambari</a>和<a href="http://www.cloudera.com/content/cloudera/zh-CN/documentation/core/v5-3-x/topics/cm_ig_install_path_a.html" target="_blank" rel="external">ClouderaManager</a>.<br>  对于Ambari,开始前虽然看到官网上说明了Ubuntu系统只支持到12.不过本着试试看看的心态研究了1天，环境搭好之后，安装<code>HDP</code>的时候系统检测那一关果然是过不去。OK，本着不跟自己过不去的原则，give up it!</p>
-<p>  ClouderaManager的使用真心让我很惊喜。</p>
-<h3 id="安装ClouderaManager"><strong>安装ClouderaManager</strong></h3><p><strong>这里以Ubuntu14.04系统为例</strong></p>
-<p>本人很懒，Couldera显然也很懒，这个发行版就是给懒人准备的嘛！<br>所以显然使用自动安装最好 </p>
-<p>1.直接在首页下载cloudera-manager-installer.bin文件 </p>
-<p>2.授予可执行权限    </p>
-<pre><code><span class="variable">$ </span>chmod u+x cloudera-manager-installer.bin
-</code></pre><p> 3.直接sudo运行安装，这里有一个地方需要注意一下。因为Cloudera如果安装失败了卸载过程非常繁杂，所以为了避免因为断网，终端安装的是发生，可以使用screen 来安装。</p>
-<pre><code><span class="variable">$ </span>sudo ./cloudera-manager-installer.bin
-</code></pre><p> 安装过程中会自动安装jdk7，所以你不要预先安装。</p>
-<p> 4.安装道路就是一系列的yes,ok。。安装成功后cloudera-server会自动启动，并监听<code>7180</code>端口<br> 之后就可以访问了，第一次默认登录账号是admin/admin.</p>
-<p> 这里有一个地方需要注意，似乎机器性能太差的机器是无法正常运行的。我没有在官网上发现这个说法，但是我使用2核4G的机器做实验安装成功之后，启动server之后过几秒就回dead。</p>
-<h3 id="安装Hadoop集群"><strong>安装Hadoop集群</strong></h3><p>在安装之前有2件事是需要大家做的。</p>
-<ul>
-<li>设置每台你要加入集群中的机器之间的ssh链接</li>
-<li>就是在每主机的<code>/etc/hosts</code>文件里加入集群中的每台主机的内网IP和主机名。这样直接填进去搜索就可以了。</li>
-</ul>
-<p>以admin/admin登录界面之后，是选择主机，之后选择CDH的版本，这里一般选择默认就可以了。</p>
-<p>在ssh的界面，需要指定你的cloudera-server所在机器的密钥文件。并且注定用户</p>
-<p>后面就是选择hadoop服务的安装。</p>
-<p>在这里有几个地方需要注意：</p>
-<ul>
-<li>首先Hive的元数据服务可能需要制定mysql等，这里需要在主机上<code>安装mysql的jdbc driver</code><br>,执行：</li>
-</ul>
-<pre><code>sudo apt-get <span class="operator"><span class="keyword">install</span> libmysql-<span class="keyword">java</span></span>
-</code></pre><p>否在会在启动服务时报错误。</p>
-<ul>
-<li>另外一个问题就是关于cloudera5 里新出现的单用户模式，据官方文档上说是可以用单个用户执行所有的服务，但是要使用这个单个用户模式会涉及到很多的用户权限问题，我自己就在这个问题上坑了很久。</li>
-</ul>
-<p>后来经过实践发现可以按照<a href="http://www.cloudera.com/content/cloudera/zh-CN/documentation/core/v5-3-x/topics/install_singleuser_reqts.html?scroll=xd_583c10bfdbd326ba--69adf108-1492ec0ce48--7ade__section_n53_hd1_fq" target="_blank" rel="external">官网上</a>的说明操作，<code>注意：</code>我们采用的自动安装模式不需要进行B和C中的设置。即只操作：</p>
-<pre><code>usermod -<span class="tag">a</span> -G sudo cloudera-scm
-</code></pre><p>取消注释：/etc/pam.d/su 里，session required pam_limits.so。</p>
-<p>其他操作则不用进行。</p>
-<h3 id="技巧"><strong>技巧</strong></h3><p>经过趟坑，发现有以下几点可以避免权限错误。</p>
-<ul>
-<li><p>我们可以挂在一块单独的硬盘，挂载到根目录下得/data目录上，之后讲安装集群过程中所有的内容都知道这个data上，即将之前的/var/log,/var/lib目录的内容都制定到/data/cm/var/log,/data/cm/var/lib里面。并且将/data/cm的目录权限授予cloudera-scm用户。</p>
-<pre><code>sudo chown cloudera-<span class="string">scm:</span>root data/
-sudo chown cloudera-<span class="string">scm:</span>root cm/
-</code></pre></li>
-</ul>
-<p>注意这里的组权限必须是root而不能是cloudera-scm，否则启动服务时会警告，虽然我也不清楚是为什么。</p>
-<p>如果以上的过程你都经历了，那么恭喜你，终于不要满世界的机器去看状态和改配置文件了（大公司的哥们忽略。。）！</p>
-<p>自己也刚刚开始使用，后期会继续摸索。。。</p>
+        <h3 id="关于复制因子">关于复制因子</h3><p>HDFS文件系统中文件存储的最小单位是块，块的大小是可以在配置文件中配置的，一般配置为64M或者128M,这就意味着哪怕一个文件只有1K,也会占用集群实际硬盘128M的硬盘，这种设计的初衷是为了尽可能的减小维护数据目录的成本，增快数据查找,归并的速度。从另一方面也要求我们在存入数据时尽量减少零碎数据的产生。<br>HDFS可以通过<code>replication</code>这个参数来改变集群中的复制因子。    </p>
+<p><strong>注意</strong> ：这里的复制因子指的是系统中文件块的副本数，注意这里指的是块的副本数而不是文件的副本数。</p>
+<p>我们可以通过在配置文件中修改参数修改复制因子，但要<code>注意</code>修改复制因子重启HDFS后，以前的数据复制因子不会改变，因为在HDFS中复制因子这个参数是赋予到每个文件中的，之前已经put进hdfs中的文件的复制因子会保留在当时集群设置的复制因子值。当然你也可以在put某个文件时单独指定它的复制因子。如：</p>
+<pre><code>hdfs dfs -D dfs.replication=<span class="number">1</span> -put <span class="number">70</span>M logs/<span class="number">2</span>
+</code></pre><p>对正式环境集群，需要统一整个集群所有文件的复制因子。可以执行以下命令</p>
+<pre><code>hadoop fs -setrep -R <span class="number">3</span> /
+</code></pre><p>这样根目录<code>/</code>以下的所有文件的块都会复制为3.hadoop官方默认的replication参数就是3.这也是hadoop正式集群要求datanode至少为3个的原因。<br>而默认的分布是至少有1份在另一个datanode上，如果对机器进行了机架的分配则分不规则是A一份，与A同机架的B一份，不同机架的C一份。这样最高的保证了数据不会物理丢失。</p>
+<h3 id="关于块的检查与操作。">关于块的检查与操作。</h3><p>fsck HDFS文件系统检查工具。   </p>
+<pre><code>hdfs fsck <span class="comment">[GENERIC_OPTIONS]</span> &lt;path&gt; <span class="comment">[-move | -delete | -openforwrite]</span> <span class="comment">[-files <span class="comment">[-blocks <span class="comment">[-locations | -racks]</span>]</span>]</span>
+</code></pre><table>
+<thead>
+<tr>
+<th>命令选项</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>path</td>
+<td>检查的起始目录。</td>
+</tr>
+<tr>
+<td>-move</td>
+<td>移动受损文件到/lost+found</td>
+</tr>
+<tr>
+<td>-delete</td>
+<td>删除受损文件。</td>
+</tr>
+<tr>
+<td>-openforwrite</td>
+<td>打印出写打开的文件。</td>
+</tr>
+<tr>
+<td>-files</td>
+<td>打印出正被检查的文件。</td>
+</tr>
+<tr>
+<td>-blocks</td>
+<td>打印出块信息报告。</td>
+</tr>
+<tr>
+<td>-locations</td>
+<td>打印出每个块的位置信息。</td>
+</tr>
+<tr>
+<td>-racks</td>
+<td>打印出data-node的网络拓扑结构。 </td>
+</tr>
+</tbody>
+</table>
+<p>以上检查出 整个文件系统的块信息</p>
+<p><img src="http://bcygamer.wang/img/fsckcheck.png" alt=""></p>
 
       
     </div>
@@ -286,18 +297,9 @@ sudo chown cloudera-<span class="string">scm:</span>root cm/
     
 <nav id="article-nav">
   
-    <a href="/2015/08/12/flume搭建/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          flume搭建
-        
-      </div>
-    </a>
   
-  
-    <a href="/2015/08/10/mysql忘记密码处理/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">mysql忘记密码处理</div>
+    <a href="/2015/11/04/NameNode数据目录丢失/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">NameNode数据目录丢失</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -326,7 +328,7 @@ sudo chown cloudera-<span class="string">scm:</span>root cm/
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="ClouderaManager入门使用" data-title="ClouderaManager入门使用" data-url="http://bcyyu.wang/2015/08/11/ClouderaManager入门使用/"></div>
+	<div class="ds-thread" data-thread-key="HDFS复制因子与块操作" data-title="HDFS复制因子与块操作" data-url="http://bcyyu.wang/2015/11/05/HDFS复制因子与块操作/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">

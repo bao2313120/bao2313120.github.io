@@ -120,7 +120,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 20px;">Hadoop</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+						<a href="/tags/HDFS/" style="font-size: 15px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 20px;">Hadoop</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
 					</div>
 				</section>
 				
@@ -197,6 +197,113 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-HDFS复制因子与块操作" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/11/05/HDFS复制因子与块操作/" class="article-date">
+  	<time datetime="2015-11-05T07:41:40.000Z" itemprop="datePublished">2015-11-05</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/11/05/HDFS复制因子与块操作/">HDFS复制因子与块操作</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="关于复制因子">关于复制因子</h3><p>HDFS文件系统中文件存储的最小单位是块，块的大小是可以在配置文件中配置的，一般配置为64M或者128M,这就意味着哪怕一个文件只有1K,也会占用集群实际硬盘128M的硬盘，这种设计的初衷是为了尽可能的减小维护数据目录的成本，增快数据查找,归并的速度。从另一方面也要求我们在存入数据时尽量减少零碎数据的产生。<br>HDFS可以通过<code>replication</code>这个参数来改变集群中的复制因子。    </p>
+<p><strong>注意</strong> ：这里的复制因子指的是系统中文件块的副本数，注意这里指的是块的副本数而不是文件的副本数。</p>
+<p>我们可以通过在配置文件中修改参数修改复制因子，但要<code>注意</code>修改复制因子重启HDFS后，以前的数据复制因子不会改变，因为在HDFS中复制因子这个参数是赋予到每个文件中的，之前已经put进hdfs中的文件的复制因子会保留在当时集群设置的复制因子值。当然你也可以在put某个文件时单独指定它的复制因子。如：</p>
+<pre><code>hdfs dfs -D dfs.replication=<span class="number">1</span> -put <span class="number">70</span>M logs/<span class="number">2</span>
+</code></pre><p>对正式环境集群，需要统一整个集群所有文件的复制因子。可以执行以下命令</p>
+<pre><code>hadoop fs -setrep -R <span class="number">3</span> /
+</code></pre><p>这样根目录<code>/</code>以下的所有文件的块都会复制为3.hadoop官方默认的replication参数就是3.这也是hadoop正式集群要求datanode至少为3个的原因。<br>而默认的分布是至少有1份在另一个datanode上，如果对机器进行了机架的分配则分不规则是A一份，与A同机架的B一份，不同机架的C一份。这样最高的保证了数据不会物理丢失。</p>
+<h3 id="关于块的检查与操作。">关于块的检查与操作。</h3><p>fsck HDFS文件系统检查工具。   </p>
+<pre><code>hdfs fsck <span class="comment">[GENERIC_OPTIONS]</span> &lt;path&gt; <span class="comment">[-move | -delete | -openforwrite]</span> <span class="comment">[-files <span class="comment">[-blocks <span class="comment">[-locations | -racks]</span>]</span>]</span>
+</code></pre><table>
+<thead>
+<tr>
+<th>命令选项</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>path</td>
+<td>检查的起始目录。</td>
+</tr>
+<tr>
+<td>-move</td>
+<td>移动受损文件到/lost+found</td>
+</tr>
+<tr>
+<td>-delete</td>
+<td>删除受损文件。</td>
+</tr>
+<tr>
+<td>-openforwrite</td>
+<td>打印出写打开的文件。</td>
+</tr>
+<tr>
+<td>-files</td>
+<td>打印出正被检查的文件。</td>
+</tr>
+<tr>
+<td>-blocks</td>
+<td>打印出块信息报告。</td>
+</tr>
+<tr>
+<td>-locations</td>
+<td>打印出每个块的位置信息。</td>
+</tr>
+<tr>
+<td>-racks</td>
+<td>打印出data-node的网络拓扑结构。 </td>
+</tr>
+</tbody>
+</table>
+<p>以上检查出 整个文件系统的块信息</p>
+<p><img src="http://bcygamer.wang/img/fsckcheck.png" alt=""></p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HDFS/">HDFS</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
   
     <article id="post-NameNode数据目录丢失" class="article article-type-post" itemscope itemprop="blogPost">
   
