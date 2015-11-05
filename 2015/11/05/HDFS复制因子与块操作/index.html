@@ -12,7 +12,7 @@
 <meta property="og:site_name" content="Gamer Bao">
 <meta property="og:description" content="关于复制因子HDFS文件系统中文件存储的最小单位是块，块的大小是可以在配置文件中配置的，一般配置为64M或者128M,这就意味着哪怕一个文件只有1K,也会占用集群实际硬盘128M的硬盘，这种设计的初衷是为了尽可能的减小维护数据目录的成本，增快数据查找,归并的速度。从另一方面也要求我们在存入数据时尽量减少零碎数据的产生。HDFS可以通过replication这个参数来改变集群中的复制因子。">
 <meta property="og:image" content="http://bcygamer.wang/img/fsckcheck.png">
-<meta property="og:updated_time" content="2015-11-05T10:04:27.000Z">
+<meta property="og:updated_time" content="2015-11-05T11:05:10.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HDFS复制因子与块操作">
 <meta name="twitter:description" content="关于复制因子HDFS文件系统中文件存储的最小单位是块，块的大小是可以在配置文件中配置的，一般配置为64M或者128M,这就意味着哪怕一个文件只有1K,也会占用集群实际硬盘128M的硬盘，这种设计的初衷是为了尽可能的减小维护数据目录的成本，增快数据查找,归并的速度。从另一方面也要求我们在存入数据时尽量减少零碎数据的产生。HDFS可以通过replication这个参数来改变集群中的复制因子。">
@@ -122,7 +122,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/HDFS/" style="font-size: 15px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 20px;">Hadoop</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+						<a href="/tags/HDFS/" style="font-size: 20px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 20px;">Hadoop</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
 					</div>
 				</section>
 				
@@ -288,6 +288,35 @@
 </table>
 <p>以上检查出 整个文件系统的块信息</p>
 <p><img src="http://bcygamer.wang/img/fsckcheck.png" alt=""></p>
+<pre><code>/user/hive/warehouse/app1001/log_track/actionsub=install/datesub=2015-11-01/events-.1446463158815: MISSING 1 blocks of total size 131 B...../user/hive/warehouse/app1001/log_track/actionsub=install/datesub=2015-11-02/.events-.1446466681766.tmplog 133 bytes, 1 block(s), OPENFORWRITE: ........../user/hive/warehouse/app1001/log_track/actionsub=install/datesub=2015-11-02/events-.1446462338729 133 bytes, 1 block(s), OPENFORWRITE:
+/user/hive/warehouse/app1001/log_track/actionsub=install/datesub=2015-11-02/events-.1446462338729: MISSING 1 blocks of total size 133 B
+....................................................................................................
+...................................................Status: CORRUPT
+Total size:    637720798464 B
+Total dirs:    8270
+Total files:   68551
+Total symlinks:                0
+Total blocks (validated):      69016 (avg. block size 9240187 B)
+<span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span>
+CORRUPT FILES:        61
+MISSING BLOCKS:       61
+MISSING SIZE:         2332908 B
+<span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span>
+Minimally replicated blocks:   68955 (99.91161 %)
+Over-replicated blocks:        0 (0.0 %)
+Under-replicated blocks:       119 (0.17242378 %)
+Mis-replicated blocks:         0 (0.0 %)
+Default replication factor:    3
+Average block replication:     2.9935522
+Corrupt blocks:                0
+Missing replicas:              238 (0.11496252 %)
+Number of data-nodes:          4
+Number of racks:               1
+FSCK ended at Wed Nov 04 06:01:15 UTC 2015 in 1285 milliseconds
+
+The filesystem under path '/' is CORRUPT
+</code></pre><p>从上面信息中可以得到丢失的块。一般情况下，HDFS的系统是很稳健，不会出现全部副本丢失的情况。假设出现全部副本丢失，我们只能删除这些块所属的文件以保证系统可以正常运行，将损失减到最低。</p>
+<h3 id="增删DataNode时块副本同步机制的作用。">增删DataNode时块副本同步机制的作用。</h3><p>新增节点可以使用平衡数据命令来平衡数据。<br>删除节点需要一个一个的删除，并且删除一个之后，注意检查将块补充成3份，再删除另一个。</p>
 
       
     </div>
@@ -296,6 +325,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2015/11/05/HDFS架构设计要点/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          HDFS架构设计要点
+        
+      </div>
+    </a>
   
   
     <a href="/2015/11/04/NameNode数据目录丢失/" id="article-nav-older" class="article-nav-link-wrap">
