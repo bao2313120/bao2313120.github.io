@@ -3,27 +3,22 @@
 <head>
   <meta charset="utf-8">
   
-  <title>mysql忘记密码处理 | Gamer Bao</title>
+  <title>NameNode数据目录丢失 | Gamer Bao</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="工作中会使用很多的主机，偶尔用到一台很久不用的主机，需要mysql的服务，作为实验环境第一反应会去apt-get intsall mysql-server. 可是发现已经安装过。 then,what’s the password for root?
-  进入免权限认证处理
-  sudo vim /etc/mysql/my.cnf
-  把skip-grant-tables 在[mysqld]段中。">
+  <meta name="description" content="NameNode目录丢失起因这是一个很惨痛的经历，公司数据2T的数据量，游戏用户行为数据分析系统处于内测阶段。采用ClouderaManager管理CDH各个组件。今天意图使用HA高可用。  
+这里的具体细节不再论述，总之是高可用双namenode部署失败了，返回单节点NameNode，需要对namenode进行format,而用过CM的用户知道，它是不支持namenode目录不为空时的forma">
 <meta property="og:type" content="article">
-<meta property="og:title" content="mysql忘记密码处理">
-<meta property="og:url" content="http://bcyyu.wang/2015/08/10/mysql忘记密码处理/index.html">
+<meta property="og:title" content="NameNode数据目录丢失">
+<meta property="og:url" content="http://bcyyu.wang/2015/11/04/NameNode数据目录丢失/index.html">
 <meta property="og:site_name" content="Gamer Bao">
-<meta property="og:description" content="工作中会使用很多的主机，偶尔用到一台很久不用的主机，需要mysql的服务，作为实验环境第一反应会去apt-get intsall mysql-server. 可是发现已经安装过。 then,what’s the password for root?
-  进入免权限认证处理
-  sudo vim /etc/mysql/my.cnf
-  把skip-grant-tables 在[mysqld]段中。">
-<meta property="og:updated_time" content="2015-08-12T07:18:58.000Z">
+<meta property="og:description" content="NameNode目录丢失起因这是一个很惨痛的经历，公司数据2T的数据量，游戏用户行为数据分析系统处于内测阶段。采用ClouderaManager管理CDH各个组件。今天意图使用HA高可用。  
+这里的具体细节不再论述，总之是高可用双namenode部署失败了，返回单节点NameNode，需要对namenode进行format,而用过CM的用户知道，它是不支持namenode目录不为空时的forma">
+<meta property="og:image" content="http://bcyyu.wang/namenodedir.png">
+<meta property="og:updated_time" content="2015-11-05T03:54:47.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="mysql忘记密码处理">
-<meta name="twitter:description" content="工作中会使用很多的主机，偶尔用到一台很久不用的主机，需要mysql的服务，作为实验环境第一反应会去apt-get intsall mysql-server. 可是发现已经安装过。 then,what’s the password for root?
-  进入免权限认证处理
-  sudo vim /etc/mysql/my.cnf
-  把skip-grant-tables 在[mysqld]段中。">
+<meta name="twitter:title" content="NameNode数据目录丢失">
+<meta name="twitter:description" content="NameNode目录丢失起因这是一个很惨痛的经历，公司数据2T的数据量，游戏用户行为数据分析系统处于内测阶段。采用ClouderaManager管理CDH各个组件。今天意图使用HA高可用。  
+这里的具体细节不再论述，总之是高可用双namenode部署失败了，返回单节点NameNode，需要对namenode进行format,而用过CM的用户知道，它是不支持namenode目录不为空时的forma">
   
     <link rel="alternative" href="/atom.xml" title="Gamer Bao" type="application/atom+xml">
   
@@ -206,11 +201,11 @@
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap"><article id="post-mysql忘记密码处理" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-NameNode数据目录丢失" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2015/08/10/mysql忘记密码处理/" class="article-date">
-  	<time datetime="2015-08-10T09:31:23.000Z" itemprop="datePublished">2015-08-10</time>
+      <a href="/2015/11/04/NameNode数据目录丢失/" class="article-date">
+  	<time datetime="2015-11-04T09:19:05.000Z" itemprop="datePublished">2015-11-04</time>
 </a>
     </div>
   
@@ -223,7 +218,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      mysql忘记密码处理
+      NameNode数据目录丢失
     </h1>
   
 
@@ -232,7 +227,7 @@
       <div class="article-info article-info-post">
         
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop-HDFS/">Hadoop HDFS</a></li></ul>
 	</div>
 
         
@@ -243,23 +238,17 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>工作中会使用很多的主机，偶尔用到一台很久不用的主机，需要mysql的服务，作为实验环境第一反应会去apt-get intsall mysql-server. 可是发现已经安装过。 then,what’s the password for root?</p>
-<p>  <strong>进入免权限认证处理</strong></p>
-<p>  <code>sudo vim /etc/mysql/my.cnf</code></p>
-<p>  把<code>skip-grant-tables</code> 在[mysqld]段中。</p>
-<p>  重启<code>mysql sudo service mysql restart</code></p>
-<p>  然后可以直接无密码登录mysql,</p>
-<pre><code>mysql -uroot;
-
-<span class="operator"><span class="keyword">use</span> mysql;</span>
-
-<span class="operator"><span class="keyword">update</span> <span class="keyword">user</span> <span class="keyword">set</span> <span class="keyword">password</span> = <span class="keyword">password</span>(<span class="string">'new password'</span>) <span class="keyword">where</span> <span class="keyword">user</span> = <span class="string">'root'</span>;</span>
-
-<span class="operator"><span class="keyword">flush</span> <span class="keyword">privileges</span>;</span>
-
-exit;
-</code></pre><p>然后把之前修改的my.cnf文件改回来，之后重启MySQL服务。</p>
-<p>即修改密码成功</p>
+        <h1 id="NameNode目录丢失">NameNode目录丢失</h1><h3 id="起因">起因</h3><p>这是一个很惨痛的经历，公司数据2T的数据量，游戏用户行为数据分析系统处于内测阶段。采用ClouderaManager管理CDH各个组件。<br>今天意图使用HA高可用。  </p>
+<p>这里的具体细节不再论述，总之是高可用双namenode部署失败了，返回单节点NameNode，需要对namenode进行format,而用过CM的用户知道，它是不支持namenode目录不为空时的format的。<br>这里一不小心吧namenode中的目录日志nn删除了。<br><strong>在敲下enter的瞬间，脑子就热了。。擦！</strong></p>
+<p>果不其然，启动后数据都不可见了。只能看到flume刚实时导入的数据。</p>
+<h3 id="思考">思考</h3><p>OK，吃饭时间到了，先吃晚饭，之后查了下解决方案。第一点无意是尝试恢复linux下被删除的数据。无奈hadoop集群重启后硬盘已经被写入了。恢复硬盘数据已经不简单了。<br>在不了解一下的解决方案前，思考Hadoop 会不会有扫描块之后重建namenode目录的实现方案。<br>无奈，没有知道相关的文章和文档。 找到了以下的解决方案。</p>
+<h3 id="解决">解决</h3><h4 id="解决思路原理">解决思路原理</h4><p>在解决这个问题之前，我们需要先说一下HDFS文件系统维护中的几个角色。   </p>
+<ul>
+<li><strong>NameNode</strong></li>
+<li><strong>DataNode</strong></li>
+<li><strong>SecondaryNameNode</strong></li>
+</ul>
+<p>这里我们不介绍MapReduce的过程，所以对DataNode的理解就单纯的理解为储存数据块的节点。<br>在一个HDFS文件系统中，如果不启用HA,那么NameNode就是这个这个文件系统的核心管理器也是单节点的瓶颈所在，我们先看一下NameNode对DataNode中的数据块的维护方式。<br><img src="/namenodedir.png" alt=""></p>
 
       
     </div>
@@ -269,18 +258,9 @@ exit;
     
 <nav id="article-nav">
   
-    <a href="/2015/08/11/ClouderaManager入门使用/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          ClouderaManager入门使用
-        
-      </div>
-    </a>
   
-  
-    <a href="/2015/08/10/mysql新建用户权限控制/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">mysql新建用户权限控制</div>
+    <a href="/2015/09/08/Compass项目架构变化/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Compass项目架构变化</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -309,7 +289,7 @@ exit;
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="mysql忘记密码处理" data-title="mysql忘记密码处理" data-url="http://bcyyu.wang/2015/08/10/mysql忘记密码处理/"></div>
+	<div class="ds-thread" data-thread-key="NameNode数据目录丢失" data-title="NameNode数据目录丢失" data-url="http://bcyyu.wang/2015/11/04/NameNode数据目录丢失/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">

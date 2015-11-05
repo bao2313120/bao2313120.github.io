@@ -3,27 +3,17 @@
 <head>
   <meta charset="utf-8">
   
-  <title>mysql忘记密码处理 | Gamer Bao</title>
+  <title>Archives: 2015/11 | Gamer Bao</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="工作中会使用很多的主机，偶尔用到一台很久不用的主机，需要mysql的服务，作为实验环境第一反应会去apt-get intsall mysql-server. 可是发现已经安装过。 then,what’s the password for root?
-  进入免权限认证处理
-  sudo vim /etc/mysql/my.cnf
-  把skip-grant-tables 在[mysqld]段中。">
-<meta property="og:type" content="article">
-<meta property="og:title" content="mysql忘记密码处理">
-<meta property="og:url" content="http://bcyyu.wang/2015/08/10/mysql忘记密码处理/index.html">
+  <meta name="description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Gamer Bao">
+<meta property="og:url" content="http://bcyyu.wang/archives/2015/11/index.html">
 <meta property="og:site_name" content="Gamer Bao">
-<meta property="og:description" content="工作中会使用很多的主机，偶尔用到一台很久不用的主机，需要mysql的服务，作为实验环境第一反应会去apt-get intsall mysql-server. 可是发现已经安装过。 then,what’s the password for root?
-  进入免权限认证处理
-  sudo vim /etc/mysql/my.cnf
-  把skip-grant-tables 在[mysqld]段中。">
-<meta property="og:updated_time" content="2015-08-12T07:18:58.000Z">
+<meta property="og:description">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="mysql忘记密码处理">
-<meta name="twitter:description" content="工作中会使用很多的主机，偶尔用到一台很久不用的主机，需要mysql的服务，作为实验环境第一反应会去apt-get intsall mysql-server. 可是发现已经安装过。 then,what’s the password for root?
-  进入免权限认证处理
-  sudo vim /etc/mysql/my.cnf
-  把skip-grant-tables 在[mysqld]段中。">
+<meta name="twitter:title" content="Gamer Bao">
+<meta name="twitter:description">
   
     <link rel="alternative" href="/atom.xml" title="Gamer Bao" type="application/atom+xml">
   
@@ -206,128 +196,53 @@
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap"><article id="post-mysql忘记密码处理" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap">
   
-    <div class="article-meta">
-      <a href="/2015/08/10/mysql忘记密码处理/" class="article-date">
-  	<time datetime="2015-08-10T09:31:23.000Z" itemprop="datePublished">2015-08-10</time>
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2015" class="archive-year">2015</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2015/11/04/NameNode数据目录丢失/" class="archive-article-date">
+  	<time datetime="2015-11-04T09:19:05.000Z" itemprop="datePublished">Nov 4</time>
 </a>
-    </div>
+        </div>
+    	 
   
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      mysql忘记密码处理
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2015/11/04/NameNode数据目录丢失/">NameNode数据目录丢失</a>
     </h1>
   
 
-      </header>
-      
-      <div class="article-info article-info-post">
-        
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop-HDFS/">Hadoop HDFS</a></li></ul>
 	</div>
 
-        
+          
 
+        </div>
         <div class="clearfix"></div>
-      </div>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>工作中会使用很多的主机，偶尔用到一台很久不用的主机，需要mysql的服务，作为实验环境第一反应会去apt-get intsall mysql-server. 可是发现已经安装过。 then,what’s the password for root?</p>
-<p>  <strong>进入免权限认证处理</strong></p>
-<p>  <code>sudo vim /etc/mysql/my.cnf</code></p>
-<p>  把<code>skip-grant-tables</code> 在[mysqld]段中。</p>
-<p>  重启<code>mysql sudo service mysql restart</code></p>
-<p>  然后可以直接无密码登录mysql,</p>
-<pre><code>mysql -uroot;
-
-<span class="operator"><span class="keyword">use</span> mysql;</span>
-
-<span class="operator"><span class="keyword">update</span> <span class="keyword">user</span> <span class="keyword">set</span> <span class="keyword">password</span> = <span class="keyword">password</span>(<span class="string">'new password'</span>) <span class="keyword">where</span> <span class="keyword">user</span> = <span class="string">'root'</span>;</span>
-
-<span class="operator"><span class="keyword">flush</span> <span class="keyword">privileges</span>;</span>
-
-exit;
-</code></pre><p>然后把之前修改的my.cnf文件改回来，之后重启MySQL服务。</p>
-<p>即修改密码成功</p>
-
-      
-    </div>
-    
+    </header>
   </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2015/08/11/ClouderaManager入门使用/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          ClouderaManager入门使用
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2015/08/10/mysql新建用户权限控制/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">mysql新建用户权限控制</div>
-      <strong class="article-nav-caption">></strong>
-    </a>
-  
-</nav>
-
-  
 </article>
+  
+  
+    </div></section>
+  
 
-
-<div class="share">
-	<!-- JiaThis Button BEGIN -->
-	<div class="jiathis_style">
-		<span class="jiathis_txt">分享到：</span>
-		<a class="jiathis_button_tsina"></a>
-		<a class="jiathis_button_cqq"></a>
-		<a class="jiathis_button_douban"></a>
-		<a class="jiathis_button_weixin"></a>
-		<a class="jiathis_button_tumblr"></a>
-		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
-	</div>
-	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
-	<!-- JiaThis Button END -->
-</div>
-
-
-
-<div class="duoshuo">
-	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="mysql忘记密码处理" data-title="mysql忘记密码处理" data-url="http://bcyyu.wang/2015/08/10/mysql忘记密码处理/"></div>
-	<!-- 多说评论框 end -->
-	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"true"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		 || document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<!-- 多说公共JS代码 end -->
-</div>
-
-
-
+    
 
 </div>
             <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
@@ -361,8 +276,8 @@ exit;
 		mathjax: true,
 		animate: true,
 		isHome: false,
-		isPost: true,
-		isArchive: false,
+		isPost: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false

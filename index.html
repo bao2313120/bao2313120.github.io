@@ -120,7 +120,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Hadoop/" style="font-size: 20px;">Hadoop</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+						<a href="/tags/Hadoop/" style="font-size: 20px;">Hadoop</a> <a href="/tags/Hadoop-HDFS/" style="font-size: 10px;">Hadoop HDFS</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
 					</div>
 				</section>
 				
@@ -197,6 +197,71 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-NameNode数据目录丢失" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/11/04/NameNode数据目录丢失/" class="article-date">
+  	<time datetime="2015-11-04T09:19:05.000Z" itemprop="datePublished">2015-11-04</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/11/04/NameNode数据目录丢失/">NameNode数据目录丢失</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="NameNode目录丢失">NameNode目录丢失</h1><h3 id="起因">起因</h3><p>这是一个很惨痛的经历，公司数据2T的数据量，游戏用户行为数据分析系统处于内测阶段。采用ClouderaManager管理CDH各个组件。<br>今天意图使用HA高可用。  </p>
+<p>这里的具体细节不再论述，总之是高可用双namenode部署失败了，返回单节点NameNode，需要对namenode进行format,而用过CM的用户知道，它是不支持namenode目录不为空时的format的。<br>这里一不小心吧namenode中的目录日志nn删除了。<br><strong>在敲下enter的瞬间，脑子就热了。。擦！</strong></p>
+<p>果不其然，启动后数据都不可见了。只能看到flume刚实时导入的数据。</p>
+<h3 id="思考">思考</h3><p>OK，吃饭时间到了，先吃晚饭，之后查了下解决方案。第一点无意是尝试恢复linux下被删除的数据。无奈hadoop集群重启后硬盘已经被写入了。恢复硬盘数据已经不简单了。<br>在不了解一下的解决方案前，思考Hadoop 会不会有扫描块之后重建namenode目录的实现方案。<br>无奈，没有知道相关的文章和文档。 找到了以下的解决方案。</p>
+<h3 id="解决">解决</h3><h4 id="解决思路原理">解决思路原理</h4><p>在解决这个问题之前，我们需要先说一下HDFS文件系统维护中的几个角色。   </p>
+<ul>
+<li><strong>NameNode</strong></li>
+<li><strong>DataNode</strong></li>
+<li><strong>SecondaryNameNode</strong></li>
+</ul>
+<p>这里我们不介绍MapReduce的过程，所以对DataNode的理解就单纯的理解为储存数据块的节点。<br>在一个HDFS文件系统中，如果不启用HA,那么NameNode就是这个这个文件系统的核心管理器也是单节点的瓶颈所在，我们先看一下NameNode对DataNode中的数据块的维护方式。<br><img src="/namenodedir.png" alt=""></p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop-HDFS/">Hadoop HDFS</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
   
     <article id="post-Compass项目架构变化" class="article article-type-post" itemscope itemprop="blogPost">
   
